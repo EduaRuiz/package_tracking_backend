@@ -2,7 +2,7 @@ import { StatusDomainEntity, UserDomainEntity } from '.';
 import { IShipmentDomainEntity } from './interfaces';
 
 export class ShipmentDomainEntity implements IShipmentDomainEntity {
-  id?: string;
+  _id?: string;
   user: UserDomainEntity;
   originAddress: string;
   destinationAddress: string;
@@ -17,9 +17,9 @@ export class ShipmentDomainEntity implements IShipmentDomainEntity {
     status: StatusDomainEntity,
     createdAt: Date,
     updatedAt: Date,
-    id?: string,
+    _id?: string,
   ) {
-    this.id = id;
+    this._id = _id;
     this.user = user;
     this.originAddress = originAddress;
     this.destinationAddress = destinationAddress;

@@ -7,7 +7,6 @@ export class GetShipmentsByUserUseCase implements IUseCase {
   constructor(private readonly shipmentDomain$: IShipmentDomainService) {}
 
   execute(userId: string): Observable<ShipmentDomainEntity[]> {
-    console.log(userId);
     return this.shipmentDomain$
       .getAllShipments()
       .pipe(
@@ -21,9 +20,8 @@ export class GetShipmentsByUserUseCase implements IUseCase {
     shipments: ShipmentDomainEntity[],
     userId: string,
   ): ShipmentDomainEntity[] {
-    console.log(shipments);
     return shipments.filter(
-      (shipment: ShipmentDomainEntity) => shipment.user.id === userId,
+      (shipment: ShipmentDomainEntity) => shipment.user._id === userId,
     );
   }
 }

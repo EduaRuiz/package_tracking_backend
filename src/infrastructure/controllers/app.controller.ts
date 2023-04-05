@@ -50,7 +50,6 @@ export class AppController {
     @Body() dto: SignUpDto,
     @UserId('id') userId: string,
   ): Observable<IUserResponse> {
-    console.log(userId);
     this.delegator.toSignUp();
     return this.delegator.execute(dto);
   }

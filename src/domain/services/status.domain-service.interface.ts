@@ -5,5 +5,5 @@ export interface IStatusDomainService<
   Entity extends StatusDomainEntity = StatusDomainEntity,
 > {
   createStatus(entity: Entity): Observable<Entity>;
-  getStatus(id: string): Observable<Entity>;
+  getStatus(entityId: string): Observable<Entity>;
 }

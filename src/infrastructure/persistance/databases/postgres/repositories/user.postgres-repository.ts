@@ -4,6 +4,7 @@ import { IRepositoryBase } from './interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QueryFailedError, Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 
 export class UserPostgresRepository
   implements IRepositoryBase<UserPostgresEntity>
@@ -14,6 +15,7 @@ export class UserPostgresRepository
   ) {}
 
   create(entity: UserPostgresEntity): Observable<UserPostgresEntity> {
+    entity.id = uuid();
     return from(this.userPostgresEntity.save(entity)).pipe(
       catchError((error: QueryFailedError) => {
         error.message = 'Error while creating user';

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PostgresModule } from './databases/postgres';
 import { ShipmentService, StatusService, UserService } from './services';
+import { MongoModule } from './databases/mongo';
 
 /**
  * PersistenceModule - Module that contains all the persistence logic
@@ -9,7 +10,7 @@ import { ShipmentService, StatusService, UserService } from './services';
  * @class PersistenceModule
  */
 @Module({
-  imports: [PostgresModule],
+  imports: [PostgresModule, MongoModule],
   controllers: [],
   providers: [UserService, ShipmentService, StatusService],
   exports: [UserService, ShipmentService, StatusService],

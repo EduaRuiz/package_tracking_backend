@@ -1,5 +1,5 @@
 export class IUserAuthData {
-  id: string;
+  _id: string;
   email: string;
   name: string;
 }

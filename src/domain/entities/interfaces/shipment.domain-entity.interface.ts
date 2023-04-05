@@ -1,7 +1,7 @@
 import { IStatusDomainEntity, IUserDomainEntity } from '.';
 
 export interface IShipmentDomainEntity {
-  id?: string;
+  _id?: string;
   user: IUserDomainEntity;
   originAddress: string;
   destinationAddress: string;

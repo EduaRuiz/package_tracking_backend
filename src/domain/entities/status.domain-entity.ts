@@ -2,12 +2,12 @@ import { ShipmentDomainEntity } from '.';
 import { IStatusDomainEntity } from './interfaces';
 
 export class StatusDomainEntity implements IStatusDomainEntity {
-  id?: string;
+  _id?: string;
   name: string;
   description: string;
 
-  constructor(name: string, description: string, id?: string) {
-    this.id = id;
+  constructor(name: string, description: string, _id?: string) {
+    this._id = _id;
     this.name = name;
     this.description = description;
   }

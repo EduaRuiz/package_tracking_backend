@@ -8,7 +8,7 @@ export class UserPostgresEntity implements IUserDomainEntity {
   @Column('uuid', {
     primary: true,
     name: 'user_id',
-    default: () => 'uuid_generate_v4()',
+    // default: () => 'uuid_generate_v4()',
     nullable: false,
   })
   @Unique('user_id_key', ['id'])

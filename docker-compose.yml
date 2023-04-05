@@ -15,17 +15,17 @@ services:
     volumes:
       - data-postgres:/var/lib/postgresql/data
 
-  # mongo:
-  #   image: mongo:latest
-  #   container_name: mongo
-  #   restart: always
-  #   ports:
-  #     - 27017:27017
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: password
-  #   volumes:
-  #     - data-mongo:/data/db
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - data-mongo:/data/db
 
   # rabbitmq:
   #   image: rabbitmq:3.6-management-alpine
@@ -46,9 +46,9 @@ volumes:
   data-postgres:
     name: data-postgres
     driver: local
-  # data-mongo:
-  #   name: data-mongo
-  #   driver: local
+  data-mongo:
+    name: data-mongo
+    driver: local
   # data-rabbitmq:
   #   name: data-rabbitmq
   #   driver: local

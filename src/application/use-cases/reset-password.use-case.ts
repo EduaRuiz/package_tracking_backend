@@ -13,7 +13,7 @@ export class ResetPasswordUseCase implements IUseCase {
       throwError(new NotFoundException('User not found'));
     return this.user$.getUserById(userId).pipe(
       switchMap((user: UserDomainEntity) => {
-        return user.id !== userId
+        return user._id !== userId
           ? throwError(new NotFoundException('User not found'))
           : this.user$
               .resetPassword(userId, dto.oldPassword, dto.newPassword)

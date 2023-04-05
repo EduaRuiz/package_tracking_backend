@@ -1,0 +1,43 @@
+import { ShipmentMongoModel } from '..';
+
+describe('ShipmentMongoModel', () => {
+  // Arrange
+  const _id = '5f9f1c9b9b9b9b9b9b9b9b9b';
+  const user = null;
+  const originAddress = 'originAddress';
+  const destinationAddress = 'destinationAddress';
+  const status = null;
+  const createdAt = new Date();
+  const updatedAt = new Date();
+
+  it('should be defined', () => {
+    // Act
+    const shipmentMongoModel = new ShipmentMongoModel(
+      user,
+      originAddress,
+      destinationAddress,
+      status,
+      createdAt,
+      updatedAt,
+    );
+
+    // Assert
+    expect(shipmentMongoModel).toBeDefined();
+  });
+
+  it('should have a _id', () => {
+    // Act
+    const shipmentMongoModel = new ShipmentMongoModel(
+      user,
+      originAddress,
+      destinationAddress,
+      status,
+      createdAt,
+      updatedAt,
+      _id,
+    );
+
+    // Assert
+    expect(shipmentMongoModel._id).toBe(_id);
+  });
+});

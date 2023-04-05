@@ -4,6 +4,7 @@ import { IRepositoryBase } from './interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QueryFailedError, Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 
 export class ShipmentPostgresRepository
   implements IRepositoryBase<ShipmentPostgresEntity>
@@ -14,6 +15,7 @@ export class ShipmentPostgresRepository
   ) {}
 
   create(entity: ShipmentPostgresEntity): Observable<ShipmentPostgresEntity> {
+    entity.id = uuid();
     return from(this.shipmentPostgresEntity.save(entity)).pipe(
       catchError((error: QueryFailedError) => {
         error.message = 'Error while creating shipment';

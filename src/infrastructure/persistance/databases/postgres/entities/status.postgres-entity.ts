@@ -8,7 +8,7 @@ export class StatusPostgresEntity implements IStatusDomainEntity {
   @Column('uuid', {
     primary: true,
     name: 'status_id',
-    default: () => 'uuid_generate_v4()',
+    // default: () => 'uuid_generate_v4()',
     nullable: false,
   })
   @Unique('status_id_key', ['id'])

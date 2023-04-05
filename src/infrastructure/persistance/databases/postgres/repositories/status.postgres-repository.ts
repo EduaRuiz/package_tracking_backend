@@ -4,6 +4,7 @@ import { IRepositoryBase } from './interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QueryFailedError, Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 
 export class StatusPostgresRepository
   implements IRepositoryBase<StatusPostgresEntity>
@@ -14,6 +15,7 @@ export class StatusPostgresRepository
   ) {}
 
   create(entity: StatusPostgresEntity): Observable<StatusPostgresEntity> {
+    entity.id = uuid();
     return from(this.statusPostgresEntity.save(entity)).pipe(
       catchError((error: QueryFailedError) => {
         error.message = 'Error while creating status';

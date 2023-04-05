@@ -1,6 +1,7 @@
 import { IShipmentDomainEntity } from 'src/domain/entities/interfaces';
 import { StatusPostgresEntity, UserPostgresEntity } from '.';
 import { Column, Entity, Index, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 @Entity('shipment')
 export class ShipmentPostgresEntity implements IShipmentDomainEntity {
@@ -8,7 +9,7 @@ export class ShipmentPostgresEntity implements IShipmentDomainEntity {
   @Column('uuid', {
     primary: true,
     name: 'shipment_id',
-    default: () => 'uuid_generate_v4()',
+    // default: () => 'uuid_generate_v4()',
     nullable: false,
   })
   @Unique('shipment_id_key', ['id'])
@@ -31,7 +32,7 @@ export class ShipmentPostgresEntity implements IShipmentDomainEntity {
   @Column({
     name: 'date_time',
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    // default: () => 'CURRENT_TIMESTAMP',
     nullable: false,
   })
   createdAt: Date;
@@ -39,7 +40,7 @@ export class ShipmentPostgresEntity implements IShipmentDomainEntity {
   @Column({
     name: 'updated_at',
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    // default: () => 'CURRENT_TIMESTAMP',
     nullable: false,
   })
   updatedAt: Date;
@@ -53,12 +54,12 @@ export class ShipmentPostgresEntity implements IShipmentDomainEntity {
     updatedAt: Date,
     id?: string,
   ) {
-    this.id = id;
     this.user = user;
     this.originAddress = originAddress;
     this.destinationAddress = destinationAddress;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.id = id;
   }
 }

@@ -1,7 +1,7 @@
 import { IShipmentDomainEntity } from '.';
 
 export interface IStatusDomainEntity {
-  id?: string;
+  _id?: string;
   name: string;
   description: string;
 }

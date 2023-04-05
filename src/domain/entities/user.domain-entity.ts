@@ -2,7 +2,7 @@ import { ShipmentDomainEntity } from '.';
 import { IUserDomainEntity } from './interfaces';
 
 export class UserDomainEntity implements IUserDomainEntity {
-  id?: string;
+  _id?: string;
   firebaseId: string;
   email: string;
   password: string;
@@ -17,9 +17,9 @@ export class UserDomainEntity implements IUserDomainEntity {
     name: string,
     document: string,
     phone: string,
-    id?: string,
+    _id?: string,
   ) {
-    this.id = id;
+    this._id = _id;
     this.firebaseId = firebaseId;
     this.email = email;
     this.password = password;
