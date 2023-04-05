@@ -18,7 +18,7 @@ export class RegisterNewShipmentUseCase implements IUseCase {
     dto: IRegisterNewShipmentDto,
     userId: string,
   ): Observable<ShipmentDomainEntity> {
-    dto.userId !== userId ??
+    (!!dto.userId && dto.userId !== userId) ??
       throwError(new NotFoundException('User not found'));
     return this.validateUserExists(userId).pipe(
       switchMap((user: UserDomainEntity) => this.createShipment(dto, user)),
@@ -28,7 +28,8 @@ export class RegisterNewShipmentUseCase implements IUseCase {
   private validateUserExists(userId: string): Observable<UserDomainEntity> {
     return this.userDomain$.getUserById(userId).pipe(
       switchMap((user: UserDomainEntity) => {
-        return user._id !== userId
+        console.log(user._id, userId);
+        return user._id.toString() !== userId.toString()
           ? throwError(new NotFoundException('User not found'))
           : of(user);
       }),

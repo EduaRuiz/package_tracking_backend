@@ -12,6 +12,7 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserMongoModel } from '../models';
+import { MongoServerError } from 'mongodb';
 
 export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
   constructor(
@@ -21,9 +22,9 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
 
   create(entity: UserMongoModel): Observable<UserMongoModel> {
     return from(this.stockMongoModel.create(entity)).pipe(
-      catchError((error: Error) => {
-        error.message = 'Conflict while creating user';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while creating user');
+        throw new MongoServerError(error);
       }),
     );
   }
@@ -38,9 +39,9 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
             { new: true },
           ),
         ).pipe(
-          catchError((error: Error) => {
-            error.message = 'Conflict while updating user';
-            throw error;
+          catchError((error: MongoServerError) => {
+            error.cause = new Error('Conflict while updating user');
+            throw new MongoServerError(error);
           }),
         );
       }),
@@ -55,9 +56,9 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
             _id: entityId.toString(),
           }),
         ).pipe(
-          catchError((error: Error) => {
-            error.message = 'Conflict while deleting user';
-            throw error;
+          catchError((error: MongoServerError) => {
+            error.cause = new Error('Conflict while deleting user');
+            throw new MongoServerError(error);
           }),
         );
       }),
@@ -66,9 +67,9 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
 
   findAll(): Observable<UserMongoModel[]> {
     return from(this.stockMongoModel.find().exec()).pipe(
-      catchError((error: Error) => {
-        error.message = 'Error while getting user list';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while getting all users');
+        throw new MongoServerError(error);
       }),
     );
   }
@@ -77,14 +78,14 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
     return from(
       this.stockMongoModel.findById({ _id: entityId.toString() }),
     ).pipe(
-      catchError((error: Error) => {
-        error.message = 'Conflict while getting user by ID';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while getting user by id');
+        throw new MongoServerError(error);
       }),
       switchMap((user: UserMongoModel) =>
         iif(
           () => user === null,
-          throwError(() => new NotFoundException('User not found')),
+          throwError(() => new NotFoundException('User not found!')),
           of(user),
         ),
       ),

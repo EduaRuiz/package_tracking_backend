@@ -12,6 +12,7 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ShipmentMongoModel } from '../models';
+import { MongoServerError } from 'mongodb';
 
 export class ShipmentMongoRepository
   implements IRepositoryBase<ShipmentMongoModel>
@@ -23,9 +24,9 @@ export class ShipmentMongoRepository
 
   create(entity: ShipmentMongoModel): Observable<ShipmentMongoModel> {
     return from(this.stockMongoModel.create(entity)).pipe(
-      catchError((error: Error) => {
-        error.message = 'Conflict while creating shipment';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while creating shipment');
+        throw new MongoServerError(error);
       }),
     );
   }
@@ -43,9 +44,9 @@ export class ShipmentMongoRepository
             { new: true, populate: ['status', 'user'] },
           ),
         ).pipe(
-          catchError((error: Error) => {
-            error.message = 'Conflict while updating shipment';
-            throw error;
+          catchError((error: MongoServerError) => {
+            error.cause = new Error('Conflict while updating shipment');
+            throw new MongoServerError(error);
           }),
         );
       }),
@@ -60,9 +61,9 @@ export class ShipmentMongoRepository
             _id: entityId.toString(),
           }),
         ).pipe(
-          catchError((error: Error) => {
-            error.message = 'Conflict while deleting shipment';
-            throw error;
+          catchError((error: MongoServerError) => {
+            error.cause = new Error('Conflict while deleting shipment');
+            throw new MongoServerError(error);
           }),
         );
       }),
@@ -72,14 +73,12 @@ export class ShipmentMongoRepository
   findAll(): Observable<ShipmentMongoModel[]> {
     return from(
       this.stockMongoModel
-        .find({
-          populate: ['status', 'user'],
-        })
+        .find({}, {}, { populate: ['status', 'user'] })
         .exec(),
     ).pipe(
-      catchError((error: Error) => {
-        error.message = 'Error while getting shipment list';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while getting shipments list');
+        throw new MongoServerError(error);
       }),
     );
   }
@@ -89,18 +88,19 @@ export class ShipmentMongoRepository
       this.stockMongoModel
         .findById(
           { _id: entityId.toString() },
+          {},
           { populate: ['status', 'user'] },
         )
         .exec(),
     ).pipe(
-      catchError((error: Error) => {
-        error.message = 'Conflict while getting shipment by ID';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while getting shipment by id');
+        throw new MongoServerError(error);
       }),
       switchMap((shipment: ShipmentMongoModel) =>
         iif(
           () => shipment === null,
-          throwError(() => new NotFoundException('Shipment not found')),
+          throwError(() => new NotFoundException('Shipment not found!')),
           of(shipment),
         ),
       ),

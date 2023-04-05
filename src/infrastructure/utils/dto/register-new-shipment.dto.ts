@@ -1,10 +1,9 @@
 import {
   IsDefined,
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
-  Matches,
   MinLength,
 } from 'class-validator';
 import { IRegisterNewShipmentDto } from 'src/domain/dto';
@@ -12,7 +11,7 @@ import { IRegisterNewShipmentDto } from 'src/domain/dto';
 export class RegisterNewShipmentDto implements IRegisterNewShipmentDto {
   @IsOptional()
   @IsString()
-  @IsUUID()
+  @IsMongoId()
   userId?: string;
 
   @IsString()

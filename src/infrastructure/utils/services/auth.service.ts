@@ -12,11 +12,11 @@ export class AuthService implements IAuthDomainService {
   generateAuthResponse(user: IUserDomainEntity): Observable<IUserResponse> {
     return of({
       data: {
-        _id: user._id,
+        _id: user._id.toString(),
         email: user.email,
         name: user.name,
       },
-      token: this.jwtService.sign({ id: user._id }),
+      token: this.jwtService.sign({ id: user._id.toString() }),
     });
   }
 }

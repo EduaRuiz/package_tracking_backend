@@ -20,8 +20,10 @@ export class GetShipmentsByUserUseCase implements IUseCase {
     shipments: ShipmentDomainEntity[],
     userId: string,
   ): ShipmentDomainEntity[] {
+    console.log(shipments);
     return shipments.filter(
-      (shipment: ShipmentDomainEntity) => shipment.user._id === userId,
+      (shipment: ShipmentDomainEntity) =>
+        shipment.user._id.toString() === userId,
     );
   }
 }

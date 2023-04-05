@@ -12,6 +12,7 @@ import { NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { StatusMongoModel } from '../models';
+import { MongoServerError } from 'mongodb';
 
 export class StatusMongoRepository
   implements IRepositoryBase<StatusMongoModel>
@@ -23,9 +24,9 @@ export class StatusMongoRepository
 
   create(entity: StatusMongoModel): Observable<StatusMongoModel> {
     return from(this.stockMongoModel.create(entity)).pipe(
-      catchError((error: Error) => {
-        error.message = 'Conflict while creating status';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while creating status');
+        throw new MongoServerError(error);
       }),
     );
   }
@@ -43,9 +44,9 @@ export class StatusMongoRepository
             { new: true },
           ),
         ).pipe(
-          catchError((error: Error) => {
-            error.message = 'Conflict while updating status';
-            throw error;
+          catchError((error: MongoServerError) => {
+            error.cause = new Error('Conflict while updating status');
+            throw new MongoServerError(error);
           }),
         );
       }),
@@ -60,9 +61,9 @@ export class StatusMongoRepository
             _id: entityId.toString(),
           }),
         ).pipe(
-          catchError((error: Error) => {
-            error.message = 'Conflict while deleting status';
-            throw error;
+          catchError((error: MongoServerError) => {
+            error.cause = new Error('Conflict while deleting status');
+            throw new MongoServerError(error);
           }),
         );
       }),
@@ -71,9 +72,9 @@ export class StatusMongoRepository
 
   findAll(): Observable<StatusMongoModel[]> {
     return from(this.stockMongoModel.find().exec()).pipe(
-      catchError((error: Error) => {
-        error.message = 'Error while getting status list';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while getting all statuses');
+        throw new MongoServerError(error);
       }),
     );
   }
@@ -82,14 +83,14 @@ export class StatusMongoRepository
     return from(
       this.stockMongoModel.findById({ _id: entityId.toString() }),
     ).pipe(
-      catchError((error: Error) => {
-        error.message = 'Conflict while getting status by ID';
-        throw error;
+      catchError((error: MongoServerError) => {
+        error.cause = new Error('Conflict while getting status by id');
+        throw new MongoServerError(error);
       }),
       switchMap((status: StatusMongoModel) =>
         iif(
           () => status === null,
-          throwError(() => new NotFoundException('Status not found')),
+          throwError(() => new NotFoundException('Status not found!')),
           of(status),
         ),
       ),
