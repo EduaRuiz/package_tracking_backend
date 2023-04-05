@@ -1,24 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmPostgresConfigService } from './configs';
+import { TypeOrmPostgresConfigService } from './config';
 import {
-  ClassDayPostgresEntity,
-  GroupPostgresEntity,
-  InscriptionPostgresEntity,
-  SemesterPostgresEntity,
-  StudentPostgresEntity,
+  ShipmentPostgresEntity,
+  StatusPostgresEntity,
+  UserPostgresEntity,
 } from './entities';
 import {
-  GroupPostgresRepository,
-  InscriptionPostgresRepository,
-  SemesterPostgresRepository,
-  StudentPostgresRepository,
+  ShipmentPostgresRepository,
+  StatusPostgresRepository,
+  UserPostgresRepository,
 } from './repositories';
 import {
-  GroupPostgresService,
-  InscriptionPostgresService,
-  SemesterPostgresService,
-  StudentPostgresService,
+  ShipmentPostgresService,
+  StatusPostgresService,
+  UserPostgresService,
 } from './services';
 
 @Module({
@@ -27,34 +23,28 @@ import {
       useClass: TypeOrmPostgresConfigService,
     }),
     TypeOrmModule.forFeature([
-      InscriptionPostgresEntity,
-      GroupPostgresEntity,
-      StudentPostgresEntity,
-      SemesterPostgresEntity,
-      ClassDayPostgresEntity,
+      UserPostgresEntity,
+      ShipmentPostgresEntity,
+      StatusPostgresEntity,
     ]),
   ],
   controllers: [],
   providers: [
     TypeOrmPostgresConfigService,
-    InscriptionPostgresRepository,
-    GroupPostgresRepository,
-    StudentPostgresRepository,
-    SemesterPostgresRepository,
-    InscriptionPostgresService,
-    GroupPostgresService,
-    StudentPostgresService,
-    SemesterPostgresService,
+    UserPostgresRepository,
+    ShipmentPostgresRepository,
+    StatusPostgresRepository,
+    UserPostgresService,
+    ShipmentPostgresService,
+    StatusPostgresService,
   ],
   exports: [
-    InscriptionPostgresRepository,
-    GroupPostgresRepository,
-    StudentPostgresRepository,
-    SemesterPostgresRepository,
-    InscriptionPostgresService,
-    GroupPostgresService,
-    StudentPostgresService,
-    SemesterPostgresService,
+    UserPostgresRepository,
+    ShipmentPostgresRepository,
+    StatusPostgresRepository,
+    UserPostgresService,
+    ShipmentPostgresService,
+    StatusPostgresService,
   ],
 })
 export class PostgresModule {}
