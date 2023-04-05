@@ -1,6 +1,6 @@
 import { IShipmentDomainService } from 'src/domain/services/shipment.domain-service.interface';
 import { IUseCase } from './interface';
-import { Observable, map, of, switchMap, throwError } from 'rxjs';
+import { Observable, of, switchMap, throwError } from 'rxjs';
 import { ShipmentDomainEntity } from 'src/domain/entities';
 import { NotFoundException } from '@nestjs/common';
 

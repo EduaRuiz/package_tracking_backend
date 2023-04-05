@@ -1,4 +1,4 @@
-import { Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { Observable, of, switchMap, throwError } from 'rxjs';
 import { IUseCase } from './interface';
 import { ShipmentDomainEntity, UserDomainEntity } from 'src/domain/entities';
 import {

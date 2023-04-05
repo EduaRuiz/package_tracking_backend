@@ -7,23 +7,10 @@ import {
   UserPostgresEntity,
 } from '../entities';
 
-/**
- * Configuración para implementar TypeOrm
- *
- * @export
- * @class TypeOrmPostgresConfigService
- * @implements {TypeOrmOptionsFactory}
- */
 @Injectable()
 export class TypeOrmPostgresConfigService implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
-  /**
-   * Toma la configuración necesaria para la conexión
-   *
-   * @return {TypeOrmModuleOptions} Opciones de configuración
-   * @memberof TypeOrmPostgresConfigService
-   */
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'postgres',

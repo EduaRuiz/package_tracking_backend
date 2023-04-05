@@ -1,17 +1,9 @@
-import {
-  Observable,
-  catchError,
-  from,
-  map,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs';
+import { Observable, catchError, from, of, switchMap, throwError } from 'rxjs';
 import { UserPostgresEntity } from '../entities';
 import { IRepositoryBase } from './interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { QueryFailedError, Repository } from 'typeorm';
+import { NotFoundException } from '@nestjs/common';
 
 export class UserPostgresRepository
   implements IRepositoryBase<UserPostgresEntity>
@@ -23,8 +15,9 @@ export class UserPostgresRepository
 
   create(entity: UserPostgresEntity): Observable<UserPostgresEntity> {
     return from(this.userPostgresEntity.save(entity)).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException('Error while creating user', error.message);
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while creating user';
+        throw error;
       }),
     );
   }
@@ -43,11 +36,9 @@ export class UserPostgresRepository
               id: user.id,
             }),
           ).pipe(
-            catchError((error: Error) => {
-              throw new ConflictException(
-                'Error while updating user',
-                error.message,
-              );
+            catchError((error: QueryFailedError) => {
+              error.message = 'Error while updating user';
+              throw error;
             }),
           );
         }),
@@ -60,11 +51,9 @@ export class UserPostgresRepository
       this.findOneById(entityId).pipe(
         switchMap((user: UserPostgresEntity) => {
           return from(this.userPostgresEntity.remove(user)).pipe(
-            catchError((error: Error) => {
-              throw new ConflictException(
-                'Error while deleting user',
-                error.message,
-              );
+            catchError((error: QueryFailedError) => {
+              error.message = 'Error while deleting user';
+              throw error;
             }),
           );
         }),
@@ -74,8 +63,9 @@ export class UserPostgresRepository
 
   findAll(): Observable<UserPostgresEntity[]> {
     return from(this.userPostgresEntity.find()).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException('Error while getting users', error.message);
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while getting users';
+        throw error;
       }),
     );
   }
@@ -86,11 +76,9 @@ export class UserPostgresRepository
         where: { id: entityId },
       }),
     ).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while getting user by id',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while getting user by id';
+        throw error;
       }),
       switchMap((user: UserPostgresEntity | undefined | null) =>
         user ? of(user) : throwError(new NotFoundException('User not found')),

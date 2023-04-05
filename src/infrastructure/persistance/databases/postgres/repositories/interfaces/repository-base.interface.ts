@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 /**
- * Interfaz base para los repositorios
+ * Interface for the base repository methods that will be implemented by the concrete repositories
  *
  * @export
  * @interface IRepositoryBase
@@ -9,42 +9,46 @@ import { Observable } from 'rxjs';
  */
 export interface IRepositoryBase<Entity> {
   /**
-   * Crea un nuevo registro
+   * Creates an entity in the database and returns the created entity
    *
-   * @param {Entity} entity Datos del registro
-   * @return  {Observable<Entity>} Observable con los datos del registro
+   * @param {Entity} entity The entity to be created
+   * @return {Observable<Entity>} The created entity
    * @memberof IRepositoryBase
    */
   create(entity: Entity): Observable<Entity>;
+
   /**
-   * Actualiza un registro
+   * Updates an entity in the database and returns the updated entity
    *
-   * @param {string} entityId Identificador del registro
-   * @param {Entity} entity Datos del registro
-   * @return  {Observable<Entity>} Observable con los datos del registro
+   * @param {string} entityId The id of the entity to be updated
+   * @param {Entity} entity The entity to be updated
+   * @return {Observable<Entity>} The updated entity
    * @memberof IRepositoryBase
    */
   update(entityId: string, entity: Entity): Observable<Entity>;
+
   /**
-   * Elimina un registro
+   * Deletes an entity in the database and returns the deleted entity
    *
-   * @param {string} entityId Identificador del registro
-   * @return  {Observable<Entity>} Observable con los datos del registro
+   * @param {string} entityId The id of the entity to be deleted
+   * @return {Observable<Entity>} The deleted entity
    * @memberof IRepositoryBase
    */
   delete(entityId: string): Observable<Entity>;
+
   /**
-   * Obtiene todos los registros
+   * Finds all entities in the database and returns them
    *
-   * @return {Observable<Entity[]>} Observable con los datos de los registros
+   * @return {Observable<Entity[]>} The found entities
    * @memberof IRepositoryBase
    */
   findAll(): Observable<Entity[]>;
+
   /**
-   * Obtiene un registro por su identificador
+   * Finds an entity by its id and returns it
    *
-   * @param {string} entityId Identificador del registro
-   * @return  {Observable<Entity>} Observable con los datos del registro
+   * @param {string} entityId The id of the entity to be found
+   * @return {Observable<Entity>} The found entity
    * @memberof IRepositoryBase
    */
   findOneById(entityId: string): Observable<Entity>;

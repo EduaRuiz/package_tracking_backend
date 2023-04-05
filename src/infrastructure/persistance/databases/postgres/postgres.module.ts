@@ -17,6 +17,12 @@ import {
   UserPostgresService,
 } from './services';
 
+/**
+ * PostgresModule - Module that contains all the postgres logic
+ *
+ * @export
+ * @class PostgresModule
+ */
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

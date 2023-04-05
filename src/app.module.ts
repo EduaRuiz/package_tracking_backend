@@ -5,7 +5,15 @@ import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './infrastructure/utils/services';
+import { PostgresErrorExceptionFilter } from './infrastructure/utils/exception-filters';
+import { APP_FILTER } from '@nestjs/core';
 
+/**
+ * AppModule - Main module of the application
+ *
+ * @export
+ * @class AppModule
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,6 +32,12 @@ import { AuthService } from './infrastructure/utils/services';
     PersistenceModule,
   ],
   controllers: [AppController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: APP_FILTER,
+      useClass: PostgresErrorExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

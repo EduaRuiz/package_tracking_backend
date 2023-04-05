@@ -22,4 +22,10 @@ export class StatusPostgresEntity implements IStatusDomainEntity {
 
   @OneToMany(() => ShipmentPostgresEntity, (shipment) => shipment.status)
   shipments?: ShipmentPostgresEntity[];
+
+  constructor(name: string, description: string, id?: string) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+  }
 }

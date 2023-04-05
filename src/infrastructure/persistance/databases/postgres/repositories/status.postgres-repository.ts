@@ -1,17 +1,9 @@
-import {
-  Observable,
-  catchError,
-  from,
-  map,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs';
+import { Observable, catchError, from, of, switchMap, throwError } from 'rxjs';
 import { StatusPostgresEntity } from '../entities';
 import { IRepositoryBase } from './interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { QueryFailedError, Repository } from 'typeorm';
+import { NotFoundException } from '@nestjs/common';
 
 export class StatusPostgresRepository
   implements IRepositoryBase<StatusPostgresEntity>
@@ -23,11 +15,9 @@ export class StatusPostgresRepository
 
   create(entity: StatusPostgresEntity): Observable<StatusPostgresEntity> {
     return from(this.statusPostgresEntity.save(entity)).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while creating status',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while creating status';
+        throw error;
       }),
     );
   }
@@ -46,11 +36,9 @@ export class StatusPostgresRepository
               id: status.id,
             }),
           ).pipe(
-            catchError((error: Error) => {
-              throw new ConflictException(
-                'Error while updating status',
-                error.message,
-              );
+            catchError((error: QueryFailedError) => {
+              error.message = 'Error while updating status';
+              throw error;
             }),
           );
         }),
@@ -63,11 +51,9 @@ export class StatusPostgresRepository
       this.findOneById(entityId).pipe(
         switchMap((status: StatusPostgresEntity) => {
           return from(this.statusPostgresEntity.remove(status)).pipe(
-            catchError((error: Error) => {
-              throw new ConflictException(
-                'Error while deleting status',
-                error.message,
-              );
+            catchError((error: QueryFailedError) => {
+              error.message = 'Error while deleting status';
+              throw error;
             }),
           );
         }),
@@ -77,11 +63,9 @@ export class StatusPostgresRepository
 
   findAll(): Observable<StatusPostgresEntity[]> {
     return from(this.statusPostgresEntity.find()).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while getting status list',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while getting status list';
+        throw error;
       }),
     );
   }
@@ -92,11 +76,9 @@ export class StatusPostgresRepository
         where: { id: entityId },
       }),
     ).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while getting status by id',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while getting status by id';
+        throw error;
       }),
       switchMap((status: StatusPostgresEntity | undefined | null) =>
         status

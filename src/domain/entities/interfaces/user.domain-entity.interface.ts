@@ -8,5 +8,4 @@ export interface IUserDomainEntity {
   name: string;
   document: string;
   phone: string;
-  shipment?: [IShipmentDomainEntity];
 }

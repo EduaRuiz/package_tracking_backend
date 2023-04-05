@@ -43,4 +43,22 @@ export class ShipmentPostgresEntity implements IShipmentDomainEntity {
     nullable: false,
   })
   updatedAt: Date;
+
+  constructor(
+    user: UserPostgresEntity,
+    originAddress: string,
+    destinationAddress: string,
+    status: StatusPostgresEntity,
+    createdAt: Date,
+    updatedAt: Date,
+    id?: string,
+  ) {
+    this.id = id;
+    this.user = user;
+    this.originAddress = originAddress;
+    this.destinationAddress = destinationAddress;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
 }

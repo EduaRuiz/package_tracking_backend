@@ -1,17 +1,9 @@
-import {
-  Observable,
-  catchError,
-  from,
-  map,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs';
+import { Observable, catchError, from, of, switchMap, throwError } from 'rxjs';
 import { ShipmentPostgresEntity } from '../entities';
 import { IRepositoryBase } from './interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { QueryFailedError, Repository } from 'typeorm';
+import { NotFoundException } from '@nestjs/common';
 
 export class ShipmentPostgresRepository
   implements IRepositoryBase<ShipmentPostgresEntity>
@@ -23,11 +15,9 @@ export class ShipmentPostgresRepository
 
   create(entity: ShipmentPostgresEntity): Observable<ShipmentPostgresEntity> {
     return from(this.shipmentPostgresEntity.save(entity)).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while creating shipment',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while creating shipment';
+        throw error;
       }),
     );
   }
@@ -46,11 +36,9 @@ export class ShipmentPostgresRepository
               id: shipment.id,
             }),
           ).pipe(
-            catchError((error: Error) => {
-              throw new ConflictException(
-                'Error while updating shipment',
-                error.message,
-              );
+            catchError((error: QueryFailedError) => {
+              error.message = 'Error while updating shipment';
+              throw error;
             }),
           );
         }),
@@ -63,11 +51,9 @@ export class ShipmentPostgresRepository
       this.findOneById(entityId).pipe(
         switchMap((shipment: ShipmentPostgresEntity) => {
           return from(this.shipmentPostgresEntity.remove(shipment)).pipe(
-            catchError((error: Error) => {
-              throw new ConflictException(
-                'Error while deleting shipment',
-                error.message,
-              );
+            catchError((error: QueryFailedError) => {
+              error.message = 'Error while deleting shipment';
+              throw error;
             }),
           );
         }),
@@ -79,11 +65,9 @@ export class ShipmentPostgresRepository
     return from(
       this.shipmentPostgresEntity.find({ relations: ['user', 'status'] }),
     ).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while getting shipments',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while getting shipments';
+        throw error;
       }),
     );
   }
@@ -95,11 +79,9 @@ export class ShipmentPostgresRepository
         relations: ['user', 'status'],
       }),
     ).pipe(
-      catchError((error: Error) => {
-        throw new ConflictException(
-          'Error while getting shipment by id',
-          error.message,
-        );
+      catchError((error: QueryFailedError) => {
+        error.message = 'Error while getting shipment by id';
+        throw error;
       }),
       switchMap((shipment: ShipmentPostgresEntity | undefined | null) =>
         shipment

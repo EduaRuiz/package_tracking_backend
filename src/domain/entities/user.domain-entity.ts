@@ -9,5 +9,22 @@ export class UserDomainEntity implements IUserDomainEntity {
   name: string;
   document: string;
   phone: string;
-  shipment?: [ShipmentDomainEntity];
+
+  constructor(
+    firebaseId: string,
+    email: string,
+    password: string,
+    name: string,
+    document: string,
+    phone: string,
+    id?: string,
+  ) {
+    this.id = id;
+    this.firebaseId = firebaseId;
+    this.email = email;
+    this.password = password;
+    this.name = name;
+    this.document = document;
+    this.phone = phone;
+  }
 }

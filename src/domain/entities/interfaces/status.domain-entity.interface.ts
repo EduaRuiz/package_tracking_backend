@@ -4,5 +4,4 @@ export interface IStatusDomainEntity {
   id?: string;
   name: string;
   description: string;
-  shipment?: [IShipmentDomainEntity];
 }

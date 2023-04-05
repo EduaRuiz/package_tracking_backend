@@ -7,23 +7,10 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { Observable, map, of, switchMap, catchError } from 'rxjs';
 
-/**
- * Guard de JWT para proteger rutas
- *
- * @export
- * @class JwtGuard
- * @implements {CanActivate}
- */
 @Injectable()
 export class JwtGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
-  /**
-   * Verificar si el usuario tiene permiso para acceder a la ruta
-   *
-   * @param {ExecutionContext} context Contexto de ejecución
-   * @return {Observable<boolean>} Observable de booleano que indica si el usuario tiene permiso para acceder a la ruta
-   * @memberof JwtGuard
-   */
+
   canActivate(context: ExecutionContext): Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.replace('Bearer ', '');

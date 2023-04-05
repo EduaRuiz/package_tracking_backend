@@ -3,7 +3,7 @@ import { PostgresModule } from './databases/postgres';
 import { ShipmentService, StatusService, UserService } from './services';
 
 /**
- * Modulo de persistencia
+ * PersistenceModule - Module that contains all the persistence logic
  *
  * @export
  * @class PersistenceModule

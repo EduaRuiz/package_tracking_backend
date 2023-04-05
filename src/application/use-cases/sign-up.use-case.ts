@@ -1,9 +1,10 @@
 import { IAuthDomainService, IUserDomainService } from 'src/domain/services';
 import { IUseCase } from './interface';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, of, switchMap, throwError } from 'rxjs';
 import { ISignUpDto } from 'src/domain/dto';
 import { UserDomainEntity } from 'src/domain/entities';
 import { IUserResponse } from 'src/domain/interfaces';
+import { ConflictException } from '@nestjs/common';
 
 export class SingUpUseCase implements IUseCase {
   constructor(
@@ -12,12 +13,37 @@ export class SingUpUseCase implements IUseCase {
   ) {}
 
   execute(dto: ISignUpDto): Observable<IUserResponse> {
-    return this.user$
-      .signUp(dto)
-      .pipe(
-        switchMap((user: UserDomainEntity) =>
-          this.auth$.generateAuthResponse(user),
-        ),
-      );
+    return this.validateUserDataExist(dto).pipe(
+      switchMap(() =>
+        this.user$
+          .signUp(dto)
+          .pipe(
+            switchMap((user: UserDomainEntity) =>
+              this.auth$.generateAuthResponse(user),
+            ),
+          ),
+      ),
+    );
+  }
+
+  private validateUserDataExist(dto: ISignUpDto): Observable<boolean> {
+    return this.user$.getAllUsers().pipe(
+      switchMap((users: UserDomainEntity[]) => {
+        const user = users.filter((user: UserDomainEntity) => {
+          return (
+            dto.email === user.email ||
+            dto.firebaseId === user.firebaseId ||
+            dto.document === user.document
+          );
+        })[0];
+        return !user
+          ? of(false)
+          : user.email === dto.email
+          ? throwError(new ConflictException('Email already exist'))
+          : dto.firebaseId === user.firebaseId
+          ? throwError(new ConflictException('FirebaseId already exist'))
+          : throwError(new ConflictException('Document already exist'));
+      }),
+    );
   }
 }
