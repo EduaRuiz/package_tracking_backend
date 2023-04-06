@@ -4,6 +4,11 @@ import { IStatusDomainEntity } from 'src/domain/entities/interfaces';
 
 @Schema({ collection: 'status', versionKey: false })
 export class StatusMongoModel implements IStatusDomainEntity {
+  constructor(name: string, description: string, _id?: string) {
+    this._id = _id;
+    this.name = name;
+    this.description = description;
+  }
   _id?: string;
 
   @Prop({

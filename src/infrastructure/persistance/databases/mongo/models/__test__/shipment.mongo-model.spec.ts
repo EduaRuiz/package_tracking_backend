@@ -25,7 +25,7 @@ describe('ShipmentMongoModel', () => {
     expect(shipmentMongoModel).toBeDefined();
   });
 
-  it('should have a _id', () => {
+  it('should defined all properties with values', () => {
     // Act
     const shipmentMongoModel = new ShipmentMongoModel(
       user,
@@ -39,5 +39,10 @@ describe('ShipmentMongoModel', () => {
 
     // Assert
     expect(shipmentMongoModel._id).toBe(_id);
+    expect(shipmentMongoModel.originAddress).toBe(originAddress);
+    expect(shipmentMongoModel.destinationAddress).toBe(destinationAddress);
+    expect(shipmentMongoModel.status).toBe(status);
+    expect(shipmentMongoModel.createdAt).toBe(createdAt);
+    expect(shipmentMongoModel.updatedAt).toBe(updatedAt);
   });
 });

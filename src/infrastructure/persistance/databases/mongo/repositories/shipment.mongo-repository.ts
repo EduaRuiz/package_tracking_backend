@@ -85,13 +85,11 @@ export class ShipmentMongoRepository
 
   findOneById(entityId: string): Observable<ShipmentMongoModel> {
     return from(
-      this.stockMongoModel
-        .findById(
-          { _id: entityId.toString() },
-          {},
-          { populate: ['status', 'user'] },
-        )
-        .exec(),
+      this.stockMongoModel.findById(
+        { _id: entityId.toString() },
+        {},
+        { populate: ['status', 'user'] },
+      ),
     ).pipe(
       catchError((error: MongoServerError) => {
         error.cause = new Error('Conflict while getting shipment by id');

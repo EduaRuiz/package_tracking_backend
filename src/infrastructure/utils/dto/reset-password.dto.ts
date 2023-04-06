@@ -1,5 +1,6 @@
 import {
   IsDefined,
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -11,7 +12,7 @@ import { IResetPasswordDto } from 'src/domain/dto';
 export class ResetPasswordDto implements IResetPasswordDto {
   @IsOptional()
   @IsString()
-  @IsUUID()
+  @IsMongoId()
   userId?: string;
 
   @IsString()

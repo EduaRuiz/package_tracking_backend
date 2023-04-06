@@ -1,6 +1,6 @@
 import { IUserAuthData } from '.';
 
-export class IUserResponse {
+export interface IUserResponse {
   data: IUserAuthData;
   token: string;
 }

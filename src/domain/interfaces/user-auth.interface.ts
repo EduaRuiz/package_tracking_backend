@@ -1,4 +1,4 @@
-export class IUserAuthData {
+export interface IUserAuthData {
   _id: string;
   email: string;
   name: string;

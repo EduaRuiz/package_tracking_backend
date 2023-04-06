@@ -1,4 +1,4 @@
-export class ISignUpDto {
+export interface ISignUpDto {
   firebaseId: string;
   email: string;
   password: string;

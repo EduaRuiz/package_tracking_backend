@@ -4,6 +4,23 @@ import { IUserDomainEntity } from 'src/domain/entities/interfaces';
 
 @Schema({ collection: 'user', versionKey: false })
 export class UserMongoModel implements IUserDomainEntity {
+  constructor(
+    firebaseId: string,
+    email: string,
+    password: string,
+    name: string,
+    document: string,
+    phone: string,
+    _id?: string,
+  ) {
+    this._id = _id;
+    this.firebaseId = firebaseId;
+    this.email = email;
+    this.password = password;
+    this.name = name;
+    this.document = document;
+    this.phone = phone;
+  }
   _id?: string;
 
   @Prop({

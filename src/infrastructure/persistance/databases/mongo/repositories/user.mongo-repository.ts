@@ -68,7 +68,7 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
   findAll(): Observable<UserMongoModel[]> {
     return from(this.stockMongoModel.find().exec()).pipe(
       catchError((error: MongoServerError) => {
-        error.cause = new Error('Conflict while getting all users');
+        error.cause = new Error('Conflict while getting user list');
         throw new MongoServerError(error);
       }),
     );

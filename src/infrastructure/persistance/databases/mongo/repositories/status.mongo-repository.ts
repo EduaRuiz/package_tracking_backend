@@ -73,7 +73,7 @@ export class StatusMongoRepository
   findAll(): Observable<StatusMongoModel[]> {
     return from(this.stockMongoModel.find().exec()).pipe(
       catchError((error: MongoServerError) => {
-        error.cause = new Error('Conflict while getting all statuses');
+        error.cause = new Error('Conflict while getting status list');
         throw new MongoServerError(error);
       }),
     );

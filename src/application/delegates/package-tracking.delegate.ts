@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 import {
   GetShipmentUseCase,
   GetShipmentsByUserUseCase,
+  RegisterNewShipmentUseCase,
   ResetPasswordUseCase,
   SignInUseCase,
 } from '../use-cases';
 import { SingUpUseCase } from '../use-cases/sign-up.use-case';
-import { RegisterNewShipmentUseCase } from '../use-cases/register-new-shipment.use-cae';
 
 export class PackageTrackingDelegate implements IUseCase {
   private delegate: IUseCase;
