@@ -20,6 +20,12 @@ import {
   UserMongoService,
 } from './services';
 
+/**
+ * MongoModule is the module that contains all the dependencies to connect to the database and the repositories and services that will be used in the application.
+ *
+ * @export
+ * @class MongoModule
+ */
 @Module({
   imports: [
     MongooseModule.forRootAsync({

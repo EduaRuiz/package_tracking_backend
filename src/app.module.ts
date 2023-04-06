@@ -5,10 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './infrastructure/utils/services';
-import {
-  MongoServerErrorExceptionFilter,
-  PostgresErrorExceptionFilter,
-} from './infrastructure/utils/exception-filters';
+import { MongoServerErrorExceptionFilter } from './infrastructure/utils/exception-filters';
 import { APP_FILTER } from '@nestjs/core';
 
 /**
@@ -37,10 +34,6 @@ import { APP_FILTER } from '@nestjs/core';
   controllers: [AppController],
   providers: [
     AuthService,
-    {
-      provide: APP_FILTER,
-      useClass: PostgresErrorExceptionFilter,
-    },
     {
       provide: APP_FILTER,
       useClass: MongoServerErrorExceptionFilter,
