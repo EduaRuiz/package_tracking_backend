@@ -1,7 +1,7 @@
 import { IShipmentDomainService } from 'src/domain/services';
-import { IUseCase } from '../interface';
 import { of } from 'rxjs';
 import { GetShipmentsByUserUseCase } from '..';
+import { IUseCase } from '../../interface';
 
 let getShipmentsByUserUseCase: IUseCase;
 let shipmentDomainService: IShipmentDomainService;

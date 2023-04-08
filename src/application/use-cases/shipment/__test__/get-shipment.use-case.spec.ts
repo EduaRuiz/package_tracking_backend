@@ -1,8 +1,8 @@
 import { IShipmentDomainService } from 'src/domain/services';
-import { IUseCase } from '../interface';
 import { GetShipmentUseCase } from '..';
 import { of } from 'rxjs';
 import { NotFoundException } from '@nestjs/common';
+import { IUseCase } from '../../interface';
 
 let getShipmentUseCase: IUseCase;
 let shipmentDomainService: IShipmentDomainService;

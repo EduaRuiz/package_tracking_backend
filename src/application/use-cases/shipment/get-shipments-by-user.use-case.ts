@@ -1,5 +1,5 @@
 import { IShipmentDomainService } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { ShipmentDomainEntity } from 'src/domain/entities';
 import { Observable, of, switchMap } from 'rxjs';
 

@@ -2,7 +2,7 @@ import {
   IShipmentDomainService,
   IUserDomainService,
 } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { UserDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap, throwError } from 'rxjs';
 

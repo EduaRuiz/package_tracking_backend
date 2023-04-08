@@ -1,8 +1,8 @@
 import { IUserDomainService } from 'src/domain/services';
 import { of, throwError } from 'rxjs';
-import { IUseCase } from '../interface';
-import { CreateUserUseCase } from '..';
 import { signUpDto, user } from './mocks';
+import { IUseCase } from '../../interface';
+import { CreateUserUseCase } from '..';
 
 let createUserUseCase: IUseCase;
 let userDomainService: IUserDomainService;

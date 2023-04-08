@@ -1,5 +1,5 @@
 import { IAuthDomainService, IUserDomainService } from 'src/domain/services';
-import { IUseCase } from '../interface';
+import { IUseCase } from '../../interface';
 import { signUpDto, user, userResponse } from './mocks';
 import { of } from 'rxjs';
 import { SingUpUseCase } from '..';

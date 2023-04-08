@@ -2,7 +2,7 @@ import {
   IShipmentDomainService,
   IStatusDomainService,
 } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { ShipmentDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap } from 'rxjs';
 import { IUpdateShipmentDto } from 'src/domain/dto';

@@ -2,11 +2,11 @@ import {
   IShipmentDomainService,
   IUserDomainService,
 } from 'src/domain/services';
-import { IUseCase } from '../interface';
 import { of, throwError } from 'rxjs';
 import { RegisterNewShipmentUseCase } from '..';
 import { NotFoundException } from '@nestjs/common';
 import { shipment, user, registerNewShipmentDto } from './mocks';
+import { IUseCase } from '../../interface';
 
 let registerNewShipmentUseCase: IUseCase;
 let shipmentDomainService: IShipmentDomainService;

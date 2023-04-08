@@ -1,5 +1,5 @@
 import { Observable, of, switchMap, throwError } from 'rxjs';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { ShipmentDomainEntity, UserDomainEntity } from 'src/domain/entities';
 import {
   IShipmentDomainService,

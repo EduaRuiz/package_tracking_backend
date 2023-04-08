@@ -1,4 +1,4 @@
-import { IUseCase } from '../interface';
+import { IUseCase } from '../../interface';
 import { IAuthDomainService, IUserDomainService } from 'src/domain/services';
 import { signInDto, user, userResponse } from './mocks';
 import { of, throwError } from 'rxjs';

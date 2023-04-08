@@ -1,5 +1,5 @@
 import { IStatusDomainService } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { StatusDomainEntity } from 'src/domain/entities';
 import { Observable } from 'rxjs';
 import { INewStatusDto } from 'src/domain/dto/new-status.dto.interface';

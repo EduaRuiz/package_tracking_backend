@@ -1,6 +1,6 @@
 import { UserDomainEntity } from 'src/domain/entities';
 import { IAuthDomainService, IUserDomainService } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { Observable, switchMap } from 'rxjs';
 import { ISignInDto } from 'src/domain/dto';
 import { IUserResponse } from 'src/domain/interfaces';

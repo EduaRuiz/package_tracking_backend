@@ -1,5 +1,5 @@
 import { IUserDomainService } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { Observable } from 'rxjs';
 import { UserDomainEntity } from 'src/domain/entities';
 import { ISignUpDto } from 'src/domain/dto';

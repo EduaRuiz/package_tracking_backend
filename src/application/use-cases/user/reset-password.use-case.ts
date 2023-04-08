@@ -1,5 +1,5 @@
 import { Observable, of, switchMap, throwError } from 'rxjs';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { IUserDomainService } from 'src/domain/services';
 import { IResetPasswordDto } from 'src/domain/dto';
 import { UserDomainEntity } from 'src/domain/entities';

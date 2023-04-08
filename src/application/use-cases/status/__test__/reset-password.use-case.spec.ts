@@ -1,5 +1,5 @@
 import { IUserDomainService } from 'src/domain/services';
-import { IUseCase } from '../interface';
+import { IUseCase } from '../../interface';
 import { resetPasswordDto, user } from './mocks';
 import { of, throwError } from 'rxjs';
 import { ResetPasswordUseCase } from '..';

@@ -2,7 +2,7 @@ import {
   IShipmentDomainService,
   IStatusDomainService,
 } from 'src/domain/services';
-import { IUseCase } from './interface';
+import { IUseCase } from '../interface';
 import { StatusDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap, throwError } from 'rxjs';
 

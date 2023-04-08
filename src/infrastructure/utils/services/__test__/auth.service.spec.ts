@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { IUserDomainEntity } from 'src/domain/entities';
 import { IUserResponse } from 'src/domain/interfaces';
 import { AuthService } from '..';
-import { user } from '../../../../application/use-cases/__test__/mocks';
+import { user } from '../../../../application/use-cases/status/__test__/mocks';
 
 describe('AuthService', () => {
   let service: AuthService;
