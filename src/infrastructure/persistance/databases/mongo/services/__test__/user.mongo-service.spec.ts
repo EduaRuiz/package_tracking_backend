@@ -21,6 +21,7 @@ describe('UserMongoService', () => {
             update: jest.fn(),
             findOneById: jest.fn(),
             findAll: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -165,6 +166,52 @@ describe('UserMongoService', () => {
         error: (error) => {
           expect(error).toBeInstanceOf(BadRequestException);
           expect(error.message).toBe(message);
+          done();
+        },
+      });
+    });
+  });
+
+  describe('delete', () => {
+    it('should return a user', (done) => {
+      // Arrange
+      const user: UserMongoModel = {
+        _id: '1',
+        email: 'email',
+        password: 'password',
+      } as unknown as UserMongoModel;
+      jest.spyOn(repository, 'delete').mockReturnValue(of(user));
+
+      // Act
+      const result$ = service.deleteUser(user._id);
+
+      // Assert
+      result$.subscribe({
+        next: (result) => {
+          expect(result).toEqual(user);
+          done();
+        },
+      });
+    });
+  });
+
+  describe('update', () => {
+    it('should return a user', (done) => {
+      // Arrange
+      const user: UserMongoModel = {
+        _id: '1',
+        email: 'email',
+        password: 'password',
+      } as unknown as UserMongoModel;
+      jest.spyOn(repository, 'update').mockReturnValue(of(user));
+
+      // Act
+      const result$ = service.updateUser(user._id, user);
+
+      // Assert
+      result$.subscribe({
+        next: (result) => {
+          expect(result).toEqual(user);
           done();
         },
       });

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Observable, from, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IUserDomainEntity } from 'src/domain/entities';
 import { IUserResponse } from 'src/domain/interfaces';
 import { IAuthDomainService } from 'src/domain/services';

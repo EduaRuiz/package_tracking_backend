@@ -7,7 +7,7 @@ const UserId = createParamDecorator(
     const request: Http2ServerRequest = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.replace('Bearer ', '');
     const decoded = jwt.decode(token);
-    return decoded ? decoded[data] : '';
+    return decoded ? decoded['id'] : undefined;
   },
 );
 

@@ -11,8 +11,8 @@ import {
   RegisterNewShipmentUseCase,
   ResetPasswordUseCase,
   SignInUseCase,
+  SingUpUseCase,
 } from '../use-cases';
-import { SingUpUseCase } from '../use-cases/sign-up.use-case';
 
 export class PackageTrackingDelegate implements IUseCase {
   private delegate: IUseCase;

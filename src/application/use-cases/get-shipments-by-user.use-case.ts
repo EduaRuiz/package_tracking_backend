@@ -4,10 +4,10 @@ import { ShipmentDomainEntity } from 'src/domain/entities';
 import { Observable, of, switchMap } from 'rxjs';
 
 export class GetShipmentsByUserUseCase implements IUseCase {
-  constructor(private readonly shipmentDomain$: IShipmentDomainService) {}
+  constructor(private readonly shipment$: IShipmentDomainService) {}
 
   execute(userId: string): Observable<ShipmentDomainEntity[]> {
-    return this.shipmentDomain$
+    return this.shipment$
       .getAllShipments()
       .pipe(
         switchMap((shipments: ShipmentDomainEntity[]) =>

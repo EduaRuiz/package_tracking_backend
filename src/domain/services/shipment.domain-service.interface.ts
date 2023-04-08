@@ -8,4 +8,5 @@ export interface IShipmentDomainService<
   getShipmentById(entityId: string): Observable<Entity>;
   getAllShipments(): Observable<Entity[]>;
   updateShipment(entityId: string, entity: Entity): Observable<Entity>;
+  deleteShipment(entityId: string): Observable<Entity>;
 }

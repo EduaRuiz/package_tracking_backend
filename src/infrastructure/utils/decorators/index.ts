@@ -1,1 +1,1 @@
-export {default as UserId} from './user-id.decorator';
+export * from './user-id.decorator';

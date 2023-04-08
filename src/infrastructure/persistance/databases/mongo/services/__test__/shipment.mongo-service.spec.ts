@@ -189,4 +189,28 @@ describe('ShipmentMongoService', () => {
       });
     });
   });
+
+  describe('delete Shipment', () => {
+    it('should delete a shipment', (done) => {
+      // Arrange
+      const shipment: ShipmentMongoModel = {
+        _id: '1',
+      } as unknown as ShipmentMongoModel;
+      jest
+        .spyOn(shipmentRepository, 'delete')
+        .mockReturnValueOnce(of(shipment));
+
+      // Act
+      const result$ = shipmentService.deleteShipment(shipment._id);
+
+      // Assert
+      result$.subscribe({
+        next: (result) => {
+          expect(shipmentRepository.delete).toHaveBeenCalledWith(shipment._id);
+          expect(result).toEqual(shipment);
+          done();
+        },
+      });
+    });
+  });
 });

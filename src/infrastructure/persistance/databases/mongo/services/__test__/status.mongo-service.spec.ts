@@ -17,6 +17,8 @@ describe('StatusMongoService', () => {
           useValue: {
             create: jest.fn(),
             findOneById: jest.fn(),
+            update: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -62,6 +64,48 @@ describe('StatusMongoService', () => {
       const result: Observable<StatusMongoModel> = service.getStatus(id);
 
       expect(repository.findOneById).toHaveBeenCalledWith(id);
+      expect(result).toBe(expected);
+    });
+  });
+
+  describe('updateStatus', () => {
+    it('should call statusRepository.update with the given id and entity and return an observable', () => {
+      // Arrange
+      const id: string = '123';
+      const entity: StatusMongoModel = {
+        _id: '123',
+        name: 'Test',
+        description: 'Test',
+      };
+      const expected: Observable<StatusMongoModel> =
+        new Observable<StatusMongoModel>();
+      jest.spyOn(repository, 'update').mockReturnValue(expected);
+
+      // Act
+      const result: Observable<StatusMongoModel> = service.updateStatus(
+        id,
+        entity,
+      );
+
+      // Assert
+      expect(repository.update).toHaveBeenCalledWith(id, entity);
+      expect(result).toBe(expected);
+    });
+  });
+
+  describe('deleteStatus', () => {
+    it('should call statusRepository.delete with the given id and return an observable', () => {
+      // Arrange
+      const id: string = '123';
+      const expected: Observable<StatusMongoModel> =
+        new Observable<StatusMongoModel>();
+      jest.spyOn(repository, 'delete').mockReturnValue(expected);
+
+      // Act
+      const result: Observable<StatusMongoModel> = service.deleteStatus(id);
+
+      // Assert
+      expect(repository.delete).toHaveBeenCalledWith(id);
       expect(result).toBe(expected);
     });
   });

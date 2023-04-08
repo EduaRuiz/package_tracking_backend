@@ -8,10 +8,22 @@ import {
 import { compare, hash } from 'bcrypt';
 import { UserMongoRepository } from '../repositories';
 import { UserMongoModel } from '../models';
+import { UserDomainEntity } from 'src/domain/entities';
 
 @Injectable()
 export class UserMongoService implements IUserDomainService {
   constructor(private readonly userRepository: UserMongoRepository) {}
+
+  updateUser(
+    entityId: string,
+    entity: UserDomainEntity,
+  ): Observable<UserDomainEntity> {
+    return this.userRepository.update(entityId, entity);
+  }
+
+  deleteUser(entityId: string): Observable<UserDomainEntity> {
+    return this.userRepository.delete(entityId);
+  }
 
   signIn(email: string, password: string): Observable<UserMongoModel> {
     return this.getAllUsers().pipe(

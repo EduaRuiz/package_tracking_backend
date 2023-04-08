@@ -12,5 +12,7 @@ export interface IUserDomainService<
     newPassword: string,
   ): Observable<Entity>;
   getUserById(entityId: string): Observable<Entity>;
+  updateUser(entityId: string, entity: Entity): Observable<Entity>;
+  deleteUser(entityId: string): Observable<Entity>;
   getAllUsers(): Observable<Entity[]>;
 }

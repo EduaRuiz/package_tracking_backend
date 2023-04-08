@@ -4,7 +4,12 @@ import {
   ISignInDto,
   ISignUpDto,
 } from 'src/domain/dto';
-import { IStatusDomainEntity, IUserDomainEntity } from 'src/domain/entities';
+import { INewStatusDto } from 'src/domain/dto';
+import {
+  IShipmentDomainEntity,
+  IStatusDomainEntity,
+  IUserDomainEntity,
+} from 'src/domain/entities';
 import { IUserResponse } from 'src/domain/interfaces';
 
 export const user: IUserDomainEntity = {
@@ -23,7 +28,7 @@ export const status: IStatusDomainEntity = {
   description: 'Shipment created',
 };
 
-export const shipment = {
+export const shipment: IShipmentDomainEntity = {
   _id: 'shipmentId',
   user,
   originAddress: 'originAddress',
@@ -66,4 +71,9 @@ export const userResponse: IUserResponse = {
     email: 'email',
   },
   token: 'token',
+};
+
+export const newStatusDto: INewStatusDto = {
+  name: 'name',
+  description: 'description',
 };

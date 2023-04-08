@@ -20,12 +20,15 @@ describe('PackageTrackingDelegate', () => {
       resetPassword: jest.fn(),
       getUserById: jest.fn(),
       getAllUsers: jest.fn(),
+      deleteUser: jest.fn(),
+      updateUser: jest.fn(),
     };
     shipmentDomainService = {
       createShipment: jest.fn(),
       getShipmentById: jest.fn(),
       getAllShipments: jest.fn(),
       updateShipment: jest.fn(),
+      deleteShipment: jest.fn(),
     };
     authDomainService = {
       generateAuthResponse: jest.fn(),

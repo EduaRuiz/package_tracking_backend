@@ -13,9 +13,10 @@ export class ValidateMongoId implements PipeTransform<string> {
     const isValidString = isValid
       ? String(new ObjectId(value)) === value
       : false;
-    if (isValid && isValidString) {
-      return value;
-    }
+    return isValid && isValidString ? value : this.throwError();
+  }
+
+  private throwError(): never {
     throw new BadRequestException('Invalid Mongo ID');
   }
 }

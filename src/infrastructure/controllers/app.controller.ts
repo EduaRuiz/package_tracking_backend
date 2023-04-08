@@ -22,10 +22,10 @@ import { Observable } from 'rxjs';
 import { PackageTrackingDelegate } from 'src/application/delegates';
 import { AuthService } from '../utils/services';
 import { IUserResponse } from 'src/domain/interfaces';
-import { UserId } from '../utils/decorators';
 import { ShipmentEntity } from '../persistance';
 import { JwtGuard } from '../utils/guards';
 import { ValidateMongoId } from '../utils/validators';
+import UserId from '../utils/decorators/user-id.decorator';
 
 @Controller('tracking')
 export class AppController {

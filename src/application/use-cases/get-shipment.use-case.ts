@@ -5,13 +5,13 @@ import { ShipmentDomainEntity } from 'src/domain/entities';
 import { NotFoundException } from '@nestjs/common';
 
 export class GetShipmentUseCase implements IUseCase {
-  constructor(private readonly shipmentDomainService: IShipmentDomainService) {}
+  constructor(private readonly shipment$: IShipmentDomainService) {}
 
   execute(
     shipmentId: string,
     userId: string,
   ): Observable<ShipmentDomainEntity> {
-    return this.shipmentDomainService
+    return this.shipment$
       .getShipmentById(shipmentId)
       .pipe(switchMap(this.verifyUserIdMatch(userId)));
   }

@@ -6,4 +6,6 @@ export interface IStatusDomainService<
 > {
   createStatus(entity: Entity): Observable<Entity>;
   getStatus(entityId: string): Observable<Entity>;
+  updateStatus(entityId: string, entity: Entity): Observable<Entity>;
+  deleteStatus(entityId: string): Observable<Entity>;
 }

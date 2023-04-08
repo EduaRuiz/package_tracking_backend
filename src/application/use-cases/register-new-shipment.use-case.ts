@@ -10,8 +10,8 @@ import { NotFoundException } from '@nestjs/common';
 
 export class RegisterNewShipmentUseCase implements IUseCase {
   constructor(
-    private readonly shipmentDomain$: IShipmentDomainService,
-    private readonly userDomain$: IUserDomainService,
+    private readonly shipment$: IShipmentDomainService,
+    private readonly user$: IUserDomainService,
   ) {}
 
   execute(
@@ -26,7 +26,7 @@ export class RegisterNewShipmentUseCase implements IUseCase {
   }
 
   private validateUserExists(userId: string): Observable<UserDomainEntity> {
-    return this.userDomain$.getUserById(userId).pipe(
+    return this.user$.getUserById(userId).pipe(
       switchMap((user: UserDomainEntity) => {
         return user._id.toString() !== userId.toString()
           ? throwError(new NotFoundException('User not found'))
@@ -50,6 +50,6 @@ export class RegisterNewShipmentUseCase implements IUseCase {
       updatedAt: new Date(),
       createdAt: new Date(),
     };
-    return this.shipmentDomain$.createShipment(shipment);
+    return this.shipment$.createShipment(shipment);
   }
 }
