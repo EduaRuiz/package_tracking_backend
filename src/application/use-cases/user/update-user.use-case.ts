@@ -7,7 +7,7 @@ import { IUpdateUserDto } from 'src/domain/dto';
 export class UpdateUserUseCase implements IUseCase {
   constructor(private readonly user$: IUserDomainService) {}
 
-  execute(userId: string, dto: IUpdateUserDto): Observable<UserDomainEntity> {
+  execute(dto: IUpdateUserDto, userId: string): Observable<UserDomainEntity> {
     return this.user$.getUserById(userId).pipe(
       switchMap((user) => {
         return this.user$.updateUser(userId, {

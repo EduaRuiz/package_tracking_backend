@@ -1,7 +1,8 @@
 import { IStatusDomainService } from 'src/domain/services';
-import { IUseCase, RegisterNewStatusUseCase } from '..';
+import { RegisterNewStatusUseCase } from '..';
 import { of, throwError } from 'rxjs';
 import { newStatusDto, status } from './mocks';
+import { IUseCase } from '../../interface';
 
 let registerNewStatusUseCase: IUseCase;
 let statusDomainService: IStatusDomainService;

@@ -3,6 +3,7 @@ import {
   IResetPasswordDto,
   ISignInDto,
   ISignUpDto,
+  IUpdateShipmentDto,
 } from 'src/domain/dto';
 import { INewStatusDto } from 'src/domain/dto';
 import {
@@ -76,4 +77,10 @@ export const userResponse: IUserResponse = {
 export const newStatusDto: INewStatusDto = {
   name: 'name',
   description: 'description',
+};
+
+export const updateShipmentDto: IUpdateShipmentDto = {
+  originAddress: 'new origin address',
+  destinationAddress: 'new destination address',
+  statusId: 'statusId',
 };

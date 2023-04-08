@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -13,34 +14,35 @@ import {
   UserService,
 } from '../persistance/services';
 import {
-  RegisterNewShipmentDto,
   ResetPasswordDto,
   SignInDto,
   SignUpDto,
+  UpdateUserDto,
 } from '../utils/dto';
 import { Observable } from 'rxjs';
 import { PackageTrackingDelegate } from 'src/application/delegates';
 import { AuthService } from '../utils/services';
 import { IUserResponse } from 'src/domain/interfaces';
-import { ShipmentEntity } from '../persistance';
 import { JwtGuard } from '../utils/guards';
 import { ValidateMongoId } from '../utils/validators';
 import UserId from '../utils/decorators/user-id.decorator';
+import { UserEntity } from '../persistance';
 
-@Controller('tracking')
-export class AppController {
+@Controller('user')
+export class UserController {
   private readonly delegator: PackageTrackingDelegate;
 
   constructor(
-    private readonly userService: UserService,
-    private readonly shipmentService: ShipmentService,
-    private readonly statusService: StatusService,
-    private readonly authService: AuthService,
+    private readonly user$: UserService,
+    private readonly shipment$: ShipmentService,
+    private readonly status$: StatusService,
+    private readonly auth$: AuthService,
   ) {
     this.delegator = new PackageTrackingDelegate(
-      userService,
-      shipmentService,
-      authService,
+      this.user$,
+      this.shipment$,
+      this.status$,
+      this.auth$,
     );
   }
 
@@ -57,39 +59,47 @@ export class AppController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('shipments')
-  getShipments(@UserId('id') userId: string): Observable<ShipmentEntity[]> {
-    this.delegator.toGetShipmentsByUser();
-    return this.delegator.execute(userId);
-  }
-
-  @UseGuards(JwtGuard)
-  @Get('shipment/:id')
-  getShipment(
-    @Param('id', ValidateMongoId) shipmentId: string,
-    @UserId('id', ValidateMongoId) userId: string,
-  ): Observable<ShipmentEntity> {
-    this.delegator.toGetShipment();
-    return this.delegator.execute(shipmentId, userId);
-  }
-
-  @UseGuards(JwtGuard)
-  @Post('shipment/create')
-  createShipment(
-    @Body() dto: RegisterNewShipmentDto,
-    @UserId('id', ValidateMongoId) userId: string,
-  ): Observable<ShipmentEntity> {
-    this.delegator.toRegisterNewShipment();
-    return this.delegator.execute(dto, userId);
-  }
-
-  @UseGuards(JwtGuard)
-  @Patch('user/password-reset')
+  @Patch('password-reset')
   requestPassword(
     @Body() dto: ResetPasswordDto,
     @UserId('id', ValidateMongoId) userId: string,
   ) {
     this.delegator.toResetPassword();
     return this.delegator.execute(dto, userId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get(':id')
+  getUser(
+    @Param('id', ValidateMongoId) userId: string,
+  ): Observable<UserEntity> {
+    this.delegator.toGetUser();
+    return this.delegator.execute(userId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('create')
+  createUser(@Body() dto: SignUpDto): Observable<UserEntity> {
+    this.delegator.toCreateUser();
+    return this.delegator.execute(dto);
+  }
+
+  @UseGuards(JwtGuard)
+  @Patch('update')
+  updateUser(
+    @Body() dto: UpdateUserDto,
+    @UserId('id', ValidateMongoId) userId: string,
+  ): Observable<UserEntity> {
+    this.delegator.toUpdateUser();
+    return this.delegator.execute(dto, userId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Delete('delete')
+  deleteUser(
+    @UserId('id', ValidateMongoId) userId: string,
+  ): Observable<UserEntity> {
+    this.delegator.toDeleteUser();
+    return this.delegator.execute(userId);
   }
 }

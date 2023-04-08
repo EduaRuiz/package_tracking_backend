@@ -2,8 +2,8 @@ import { IUserDomainService } from 'src/domain/services';
 import { IUseCase } from '../../interface';
 import { resetPasswordDto, user } from './mocks';
 import { of, throwError } from 'rxjs';
-import { ResetPasswordUseCase } from '..';
 import { NotFoundException } from '@nestjs/common';
+import { ResetPasswordUseCase } from '../../user';
 
 let resetPasswordUseCase: IUseCase;
 let userDomainService: IUserDomainService;

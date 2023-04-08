@@ -1,6 +1,7 @@
 import {
   IAuthDomainService,
   IShipmentDomainService,
+  IStatusDomainService,
   IUserDomainService,
 } from 'src/domain/services';
 import { PackageTrackingDelegate } from '..';
@@ -10,6 +11,7 @@ let packageTrackingDelegate: PackageTrackingDelegate;
 let userDomainService: IUserDomainService;
 let shipmentDomainService: IShipmentDomainService;
 let authDomainService: IAuthDomainService;
+let statusDomainService: IStatusDomainService;
 
 describe('PackageTrackingDelegate', () => {
   beforeEach(() => {
@@ -30,6 +32,12 @@ describe('PackageTrackingDelegate', () => {
       updateShipment: jest.fn(),
       deleteShipment: jest.fn(),
     };
+    statusDomainService = {
+      updateStatus: jest.fn(),
+      getStatus: jest.fn(),
+      deleteStatus: jest.fn(),
+      createStatus: jest.fn(),
+    };
     authDomainService = {
       generateAuthResponse: jest.fn(),
     };
@@ -38,6 +46,7 @@ describe('PackageTrackingDelegate', () => {
     packageTrackingDelegate = new PackageTrackingDelegate(
       userDomainService,
       shipmentDomainService,
+      statusDomainService,
       authDomainService,
     );
   });
