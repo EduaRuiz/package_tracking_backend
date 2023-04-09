@@ -1,4 +1,3 @@
-import { PackageTrackingDelegate } from 'src/application/delegates';
 import {
   ShipmentService,
   StatusService,
@@ -20,6 +19,7 @@ import { ValidateMongoId } from '../utils/validators';
 import { StatusEntity } from '../persistance/entities';
 import { Observable } from 'rxjs';
 import { NewStatusDto, UpdateStatusDto } from '../utils/dto';
+import { PackageTrackingDelegate } from '@application/delegates';
 
 @Controller('status')
 @UseGuards(JwtGuard)

@@ -20,13 +20,13 @@ import {
   UpdateUserDto,
 } from '../utils/dto';
 import { Observable } from 'rxjs';
-import { PackageTrackingDelegate } from 'src/application/delegates';
 import { AuthService } from '../utils/services';
 import { IUserResponse } from 'src/domain/interfaces';
 import { JwtGuard } from '../utils/guards';
 import { ValidateMongoId } from '../utils/validators';
 import UserId from '../utils/decorators/user-id.decorator';
 import { UserEntity } from '../persistance';
+import { PackageTrackingDelegate } from '@application/delegates';
 
 @Controller('user')
 export class UserController {
@@ -60,7 +60,7 @@ export class UserController {
 
   @UseGuards(JwtGuard)
   @Patch('password-reset')
-  requestPassword(
+  resetPassword(
     @Body() dto: ResetPasswordDto,
     @UserId('id', ValidateMongoId) userId: string,
   ) {

@@ -42,17 +42,6 @@ export class PackageTrackingDelegate implements IUseCase {
     return this.delegate.execute(...args);
   }
 
-  // createUseCase<T extends IUseCase>(
-  //   useCaseType: new (...args: any[]) => T,
-  // ): void {
-  //   this.delegate = new useCaseType(
-  //     this.user$,
-  //     this.shipment$,
-  //     this.auth$,
-  //     this.auth$,
-  //   );
-  // }
-
   toSignIn(): void {
     this.delegate = new SignInUseCase(this.user$, this.auth$);
   }

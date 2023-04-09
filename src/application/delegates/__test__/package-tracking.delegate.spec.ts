@@ -5,7 +5,29 @@ import {
   IUserDomainService,
 } from 'src/domain/services';
 import { PackageTrackingDelegate } from '..';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
+import {
+  CreateUserUseCase,
+  DeleteUserUseCase,
+  GetUserUseCase,
+  ResetPasswordUseCase,
+  SignInUseCase,
+  SingUpUseCase,
+  UpdateUserUseCase,
+} from '@use-cases/user';
+import {
+  DeleteShipmentUseCase,
+  GetShipmentUseCase,
+  GetShipmentsByUserUseCase,
+  RegisterNewShipmentUseCase,
+  UpdateShipmentUseCase,
+} from '@use-cases/shipment';
+import {
+  DeleteStatusUseCase,
+  GetStatusUseCase,
+  RegisterNewStatusUseCase,
+  UpdateStatusUseCase,
+} from '@use-cases/status';
 
 let packageTrackingDelegate: PackageTrackingDelegate;
 let userDomainService: IUserDomainService;
@@ -242,6 +264,224 @@ describe('PackageTrackingDelegate', () => {
         );
         done();
       },
+    });
+  });
+
+  it('should update shipment status successfully', (done) => {
+    // Arrange
+    packageTrackingDelegate.toUpdateShipment();
+    const shipmentId = '1234';
+    const status = { _id: 'statusId', name: 'Delivered' };
+    const updatedAt: Date = new Date();
+    jest
+      .spyOn(shipmentDomainService, 'updateShipment')
+      .mockReturnValue(of({ _id: shipmentId, status, updatedAt } as any));
+    jest
+      .spyOn(shipmentDomainService, 'getShipmentById')
+      .mockReturnValue(of({ _id: shipmentId } as any));
+    jest
+      .spyOn(statusDomainService, 'getStatus')
+      .mockReturnValue(of(status as any));
+
+    // Act
+    const result$ = packageTrackingDelegate.execute(shipmentId, {
+      statusId: 'statusId',
+    });
+
+    // Assert
+    result$.subscribe({
+      next: (result) => {
+        expect(result).toBeTruthy();
+        done();
+      },
+    });
+  });
+
+  describe('when calling toSignIn', () => {
+    it('should instantiate SignInUseCase', () => {
+      // Act
+      packageTrackingDelegate.toSignIn();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(SignInUseCase);
+    });
+  });
+
+  describe('when calling toSignUp', () => {
+    it('should instantiate SingUpUseCase', () => {
+      // Act
+      packageTrackingDelegate.toSignUp();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(SingUpUseCase);
+    });
+  });
+
+  describe('when calling toRegisterNewShipment', () => {
+    it('should instantiate RegisterNewShipmentUseCase', () => {
+      // Act
+      packageTrackingDelegate.toRegisterNewShipment();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        RegisterNewShipmentUseCase,
+      );
+    });
+  });
+
+  describe('when calling toGetShipment', () => {
+    it('should instantiate GetShipmentUseCase', () => {
+      // Act
+      packageTrackingDelegate.toGetShipment();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        GetShipmentUseCase,
+      );
+    });
+  });
+
+  describe('when calling toGetShipmentsByUser', () => {
+    it('should instantiate GetShipmentsByUserUseCase', () => {
+      // Act
+      packageTrackingDelegate.toGetShipmentsByUser();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        GetShipmentsByUserUseCase,
+      );
+    });
+  });
+
+  describe('when calling toResetPassword', () => {
+    it('should instantiate ResetPasswordUseCase', () => {
+      // Act
+      packageTrackingDelegate.toResetPassword();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        ResetPasswordUseCase,
+      );
+    });
+  });
+
+  describe('when calling toUpdateShipment', () => {
+    it('should instantiate UpdateShipmentUseCase', () => {
+      // Act
+      packageTrackingDelegate.toUpdateShipment();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        UpdateShipmentUseCase,
+      );
+    });
+  });
+
+  describe('when calling toDeleteShipment', () => {
+    it('should instantiate DeleteShipmentUseCase', () => {
+      // Act
+      packageTrackingDelegate.toDeleteShipment();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        DeleteShipmentUseCase,
+      );
+    });
+  });
+
+  describe('when calling toGetUser', () => {
+    it('should instantiate GetUserUseCase', () => {
+      // Act
+      packageTrackingDelegate.toGetUser();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        GetUserUseCase,
+      );
+    });
+  });
+
+  describe('when calling toGetStatus', () => {
+    it('should instantiate GetStatusUseCase', () => {
+      // Act
+      packageTrackingDelegate.toGetStatus();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        GetStatusUseCase,
+      );
+    });
+  });
+
+  describe('when calling toCreateUser', () => {
+    it('should instantiate CreateUserUseCase', () => {
+      // Act
+      packageTrackingDelegate.toCreateUser();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        CreateUserUseCase,
+      );
+    });
+  });
+
+  describe('when calling toUpdateUser', () => {
+    it('should instantiate UpdateUserUseCase', () => {
+      // Act
+      packageTrackingDelegate.toUpdateUser();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        UpdateUserUseCase,
+      );
+    });
+  });
+
+  describe('when calling toDeleteUser', () => {
+    it('should instantiate DeleteUserUseCase', () => {
+      // Act
+      packageTrackingDelegate.toDeleteUser();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        DeleteUserUseCase,
+      );
+    });
+  });
+
+  describe('when calling toRegisterNewStatus', () => {
+    it('should instantiate RegisterNewStatusUseCase', () => {
+      // Act
+      packageTrackingDelegate.toRegisterNewStatus();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        RegisterNewStatusUseCase,
+      );
+    });
+  });
+
+  describe('when calling toUpdateStatus', () => {
+    it('should instantiate UpdateStatusUseCase', () => {
+      // Act
+      packageTrackingDelegate.toUpdateStatus();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        UpdateStatusUseCase,
+      );
+    });
+  });
+
+  describe('when calling toDeleteStatus', () => {
+    it('should instantiate DeleteStatusUseCase', () => {
+      // Act
+      packageTrackingDelegate.toDeleteStatus();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        DeleteStatusUseCase,
+      );
     });
   });
 });
