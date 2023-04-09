@@ -51,7 +51,7 @@ describe('RegisterNewStatusUseCase', () => {
     const errorMessage = 'Status creation failed';
     jest
       .spyOn(statusDomainService, 'createStatus')
-      .mockReturnValue(throwError(new Error(errorMessage)));
+      .mockReturnValue(throwError(() => new Error(errorMessage)));
 
     // Act
     const result$ = registerNewStatusUseCase.execute(dto);

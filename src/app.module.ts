@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import {
   ShipmentController,
+  StatusController,
   UserController,
 } from './infrastructure/controllers';
 import { PersistenceModule } from './infrastructure/persistance';
@@ -34,7 +35,7 @@ import { APP_FILTER } from '@nestjs/core';
     }),
     PersistenceModule,
   ],
-  controllers: [UserController, ShipmentController],
+  controllers: [UserController, ShipmentController, StatusController],
   providers: [
     AuthService,
     {

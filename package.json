@@ -84,6 +84,7 @@
       "/index\\.ts$",
       ".module\\.ts$",
       ".mock\\.ts$",
+      ".mocks\\.ts$",
       "main\\.ts$"
     ]
   }

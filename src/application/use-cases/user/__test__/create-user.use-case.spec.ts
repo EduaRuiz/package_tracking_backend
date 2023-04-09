@@ -43,7 +43,7 @@ describe('CreateUserUseCase', () => {
     const message = 'User already exists';
     jest
       .spyOn(userDomainService, 'signUp')
-      .mockReturnValue(throwError(new Error(message)));
+      .mockReturnValue(throwError(() => new Error(message)));
 
     // Act
     const result$ = createUserUseCase.execute(dto);

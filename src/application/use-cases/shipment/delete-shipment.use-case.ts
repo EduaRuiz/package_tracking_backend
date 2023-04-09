@@ -16,9 +16,10 @@ export class DeleteShipmentUseCase implements IUseCase {
           shipment.user._id.toString() === userId
           ? this.shipment$.deleteShipment(shipmentId)
           : throwError(
-              new Error(
-                'Cannot delete shipment because its status is not FINALIZED',
-              ),
+              () =>
+                new Error(
+                  'Cannot delete shipment because its status is not FINALIZED',
+                ),
             );
       }),
     );

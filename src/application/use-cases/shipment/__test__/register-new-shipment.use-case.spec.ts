@@ -91,7 +91,31 @@ describe('RegisterNewShipmentUseCase', () => {
 
     jest
       .spyOn(userDomainService, 'getUserById')
-      .mockReturnValue(throwError(new NotFoundException('User not found')));
+      .mockReturnValue(
+        throwError(() => new NotFoundException('User not found')),
+      );
+
+    // Act
+    const result$ = registerNewShipmentUseCase.execute(dto, userId);
+
+    // Assert
+    result$.subscribe({
+      error: (error) => {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toBe('User not found');
+        done();
+      },
+    });
+  });
+
+  it('should throw NotFoundException when user._id is different from userId', (done) => {
+    // Arrange
+    const dto = registerNewShipmentDto;
+    const userId = dto.userId;
+
+    jest
+      .spyOn(userDomainService, 'getUserById')
+      .mockReturnValue(of({ ...user, _id: '9999' }));
 
     // Act
     const result$ = registerNewShipmentUseCase.execute(dto, userId);

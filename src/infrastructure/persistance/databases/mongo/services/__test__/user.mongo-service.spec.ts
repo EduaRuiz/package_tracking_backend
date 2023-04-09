@@ -95,7 +95,7 @@ describe('UserMongoService', () => {
     it('should return an Observable throwing an error when repository.findAll() fails', (done) => {
       jest
         .spyOn(repository, 'findAll')
-        .mockReturnValue(throwError(new Error()));
+        .mockReturnValue(throwError(() => new Error()));
 
       service.signIn(email, password).subscribe({
         error: (error) => {

@@ -23,9 +23,10 @@ export class DeleteUserUseCase implements IUseCase {
         return !shipment
           ? this.user$.deleteUser(userId)
           : throwError(
-              new Error(
-                'Cannot delete user because it has minimum one shipment with status different to FINALIZED status',
-              ),
+              () =>
+                new Error(
+                  'Cannot delete user because it has minimum one shipment with status different to FINALIZED status',
+                ),
             );
       }),
     );

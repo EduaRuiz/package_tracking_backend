@@ -87,7 +87,7 @@ describe('UpdateShipmentUseCase', () => {
       };
       jest
         .spyOn(statusDomainService, 'getStatus')
-        .mockReturnValue(throwError(new NotFoundException()));
+        .mockReturnValue(throwError(() => new NotFoundException()));
 
       // Act
       const result$ = updateShipmentUseCase.execute(shipmentId, dto);

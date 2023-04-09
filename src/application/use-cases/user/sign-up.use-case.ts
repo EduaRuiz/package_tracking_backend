@@ -39,10 +39,10 @@ export class SingUpUseCase implements IUseCase {
         return !user
           ? of(false)
           : user.email === dto.email
-          ? throwError(new ConflictException('Email already exist'))
+          ? throwError(() => new ConflictException('Email already exist'))
           : dto.firebaseId === user.firebaseId
-          ? throwError(new ConflictException('FirebaseId already exist'))
-          : throwError(new ConflictException('Document already exist'));
+          ? throwError(() => new ConflictException('FirebaseId already exist'))
+          : throwError(() => new ConflictException('Document already exist'));
       }),
     );
   }

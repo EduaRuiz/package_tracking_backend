@@ -32,11 +32,13 @@ export class UserMongoService implements IUserDomainService {
       ),
       switchMap((user: UserMongoModel) => {
         return !user
-          ? throwError(new NotFoundException('User not found'))
+          ? throwError(() => new NotFoundException('User not found'))
           : from(compare(password, user.password)).pipe(
               switchMap((isMatch: boolean) => {
                 return !isMatch
-                  ? throwError(new BadRequestException('Invalid password'))
+                  ? throwError(
+                      () => new BadRequestException('Invalid password'),
+                    )
                   : of(user);
               }),
             );
@@ -65,7 +67,7 @@ export class UserMongoService implements IUserDomainService {
         return from(compare(oldPassword, user.password)).pipe(
           switchMap((isMatch: boolean) => {
             return !isMatch
-              ? throwError(new BadRequestException('Invalid password'))
+              ? throwError(() => new BadRequestException('Invalid password'))
               : of(user).pipe(
                   switchMap((user: UserMongoModel) => {
                     return from(hash(newPassword, 10)).pipe(

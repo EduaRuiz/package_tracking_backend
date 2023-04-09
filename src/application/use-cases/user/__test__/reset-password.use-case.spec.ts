@@ -49,7 +49,7 @@ describe('ResetPasswordUseCase', () => {
 
     jest
       .spyOn(userDomainService, 'getUserById')
-      .mockReturnValue(throwError(new NotFoundException(message)));
+      .mockReturnValue(throwError(() => new NotFoundException(message)));
 
     // Act
     const result$ = resetPasswordUseCase.execute(dto, userId);

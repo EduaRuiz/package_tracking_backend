@@ -21,7 +21,7 @@ export class GetShipmentUseCase implements IUseCase {
   ): (shipment: ShipmentDomainEntity) => Observable<ShipmentDomainEntity> {
     return (shipment: ShipmentDomainEntity) => {
       return shipment.user._id.toString() !== userId
-        ? throwError(new NotFoundException('Shipment not found'))
+        ? throwError(() => new NotFoundException('Shipment not found'))
         : of(shipment);
     };
   }

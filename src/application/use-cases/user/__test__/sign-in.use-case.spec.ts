@@ -47,7 +47,7 @@ describe('SignInUseCase', () => {
 
     jest
       .spyOn(userDomainService, 'signIn')
-      .mockReturnValue(throwError(new NotFoundException(message)));
+      .mockReturnValue(throwError(() => new NotFoundException(message)));
 
     // Act
     const result$ = signInUseCase.execute(dto);

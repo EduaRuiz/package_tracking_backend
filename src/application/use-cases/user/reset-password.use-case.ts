@@ -10,14 +10,12 @@ export class ResetPasswordUseCase implements IUseCase {
 
   execute(dto: IResetPasswordDto, userId: string): Observable<boolean> {
     return !!dto.userId && dto.userId !== userId
-      ? throwError(new NotFoundException('User not found'))
+      ? throwError(() => new NotFoundException('User not found'))
       : this.user$.getUserById(userId).pipe(
-          switchMap((user: UserDomainEntity) => {
-            return user._id.toString() !== userId
-              ? throwError(new NotFoundException('User not found'))
-              : this.user$
-                  .resetPassword(userId, dto.oldPassword, dto.newPassword)
-                  .pipe(switchMap(() => of(true)));
+          switchMap(() => {
+            return this.user$
+              .resetPassword(userId, dto.oldPassword, dto.newPassword)
+              .pipe(switchMap(() => of(true)));
           }),
         );
   }

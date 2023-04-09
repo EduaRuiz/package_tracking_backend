@@ -20,7 +20,9 @@ export class DeleteStatusUseCase implements IUseCase {
         );
         return !shipment
           ? this.status$.deleteStatus(statusId)
-          : throwError(new Error('Cannot delete status because it is in use'));
+          : throwError(
+              () => new Error('Cannot delete status because it is in use'),
+            );
       }),
     );
   }

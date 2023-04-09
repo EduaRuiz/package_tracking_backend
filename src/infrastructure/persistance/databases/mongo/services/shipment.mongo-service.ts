@@ -27,7 +27,7 @@ export class ShipmentMongoService implements IShipmentDomainService {
         ).pipe(
           switchMap((status: StatusMongoModel) => {
             return !status
-              ? throwError(new NotFoundException('Status not found'))
+              ? throwError(() => new NotFoundException('Status not found'))
               : this.shipmentRepository.create({ ...entity, status: status });
           }),
         );

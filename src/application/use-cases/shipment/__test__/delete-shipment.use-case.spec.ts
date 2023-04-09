@@ -90,7 +90,7 @@ describe('DeleteShipmentUseCase', () => {
     const userId = '5678';
     jest
       .spyOn(shipmentDomainService, 'getShipmentById')
-      .mockReturnValue(throwError(new NotFoundException()));
+      .mockReturnValue(throwError(() => new NotFoundException()));
 
     // Act
     const result$ = deleteShipmentUseCase.execute(shipmentId, userId);

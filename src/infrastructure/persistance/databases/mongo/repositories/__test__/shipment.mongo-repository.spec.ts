@@ -65,7 +65,9 @@ describe('ShipmentMongoRepository', () => {
       const entity: ShipmentMongoModel = {} as any;
       const message = 'Conflict while creating shipment';
       const error = new MongoServerError(new Error(message));
-      jest.spyOn(model, 'create').mockReturnValueOnce(throwError(error) as any);
+      jest
+        .spyOn(model, 'create')
+        .mockReturnValueOnce(throwError(() => error) as any);
 
       // Act
       const result$ = repository.create(entity);
@@ -123,7 +125,7 @@ describe('ShipmentMongoRepository', () => {
       jest.spyOn(repository, 'findOneById').mockReturnValueOnce(of(entity));
       jest
         .spyOn(model, 'findByIdAndUpdate')
-        .mockReturnValueOnce(throwError(error) as any);
+        .mockReturnValueOnce(throwError(() => error) as any);
 
       // Act
       const result$ = repository.update(entityId, entity);
@@ -177,7 +179,7 @@ describe('ShipmentMongoRepository', () => {
       jest.spyOn(repository, 'findOneById').mockReturnValueOnce(of(entity));
       jest
         .spyOn(model, 'findByIdAndDelete')
-        .mockReturnValueOnce(throwError(error) as any);
+        .mockReturnValueOnce(throwError(() => error) as any);
 
       // Act
       const result$ = repository.delete(entityId);
@@ -277,7 +279,7 @@ describe('ShipmentMongoRepository', () => {
       const error = new MongoServerError(new Error(message));
       jest
         .spyOn(model, 'findById')
-        .mockReturnValueOnce(throwError(error) as any);
+        .mockReturnValueOnce(throwError(() => error) as any);
 
       // Act
       const result$ = repository.findOneById(entityId);
