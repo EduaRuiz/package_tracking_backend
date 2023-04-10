@@ -19,11 +19,12 @@ export class UpdateUserDto implements IUpdateUserDto {
   _id?: string;
 
   @IsOptional()
-  @IsString()
+  @IsNumberString()
   @IsDefined()
   @IsNotEmpty()
-  @MinLength(3)
-  name?: string;
+  @MinLength(7)
+  @MaxLength(10)
+  document?: string;
 
   @IsOptional()
   @IsNumberString()

@@ -31,9 +31,9 @@ export class SingUpUseCase implements IUseCase {
       switchMap((users: UserDomainEntity[]) => {
         const user = users.filter((user: UserDomainEntity) => {
           return (
-            dto.email === user.email ||
-            dto.firebaseId === user.firebaseId ||
-            dto.document === user.document
+            dto.email.toString() === user.email.toString() ||
+            dto.document.toString() === user.document.toString() ||
+            dto.firebaseId === user.firebaseId
           );
         })[0];
         return !user

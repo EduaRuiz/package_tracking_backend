@@ -1,5 +1,5 @@
 export interface IUpdateUserDto {
   _id?: string;
-  name?: string;
+  document?: string;
   phone?: string;
 }

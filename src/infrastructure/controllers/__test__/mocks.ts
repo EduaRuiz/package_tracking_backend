@@ -78,7 +78,7 @@ export const updateStatusDto: IUpdateStatusDto = {
 
 export const updateUserDto: IUpdateUserDto = {
   _id: 'statusId',
-  name: 'new name',
+  document: 'new document',
   phone: 'new phone',
 };
 
