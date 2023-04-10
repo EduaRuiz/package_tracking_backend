@@ -75,5 +75,37 @@ describe('UpdateUserUseCase', () => {
         },
       });
     });
+
+    it('should update the user entity with the given dto with undefined data', (done) => {
+      // Arrange
+      const userEntity = user;
+      const userId = userEntity._id;
+      const dto = updateUserDto;
+      dto.name = undefined;
+      dto.phone = undefined;
+      dto._id = userId;
+      const updatedUser = { ...userEntity, ...dto, _id: userId };
+      jest.spyOn(user$, 'getUserById').mockReturnValueOnce(of(userEntity));
+      jest.spyOn(user$, 'updateUser').mockReturnValueOnce(of(updatedUser));
+
+      // Act
+      const result$ = updateUserUseCase.execute(dto, userId);
+
+      // Assert
+      result$.subscribe({
+        next: (result) => {
+          expect(result).toEqual({
+            ...userEntity,
+            ...dto,
+          });
+          expect(user$.getUserById).toHaveBeenCalledWith(userId);
+          expect(user$.updateUser).toHaveBeenCalledWith(userId, {
+            ...userEntity,
+            ...dto,
+          });
+          done();
+        },
+      });
+    });
   });
 });

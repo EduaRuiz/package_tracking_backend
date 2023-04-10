@@ -10,7 +10,12 @@ export class UpdateStatusUseCase implements IUseCase {
   execute(dto: IUpdateStatusDto): Observable<StatusDomainEntity> {
     return this.status$.getStatus(dto._id).pipe(
       switchMap((status: StatusDomainEntity) => {
-        return this.status$.updateStatus(status._id, { ...status, ...dto });
+        status.description = dto.description || status.description;
+        return this.status$.updateStatus(status._id, {
+          ...status,
+          ...dto,
+          _id: status._id,
+        });
       }),
     );
   }

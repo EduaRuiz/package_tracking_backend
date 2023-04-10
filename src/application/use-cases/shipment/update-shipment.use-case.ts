@@ -22,6 +22,11 @@ export class UpdateShipmentUseCase implements IUseCase {
           switchMap((status) => {
             return this.shipment$.getShipmentById(shipmentId).pipe(
               switchMap((shipment) => {
+                shipment.destinationAddress =
+                  dto.destinationAddress || shipment.destinationAddress;
+                shipment.originAddress =
+                  dto.originAddress || shipment.originAddress;
+                shipment.status = status;
                 return this.shipment$.updateShipment(shipmentId, {
                   ...shipment,
                   ...dto,
@@ -35,6 +40,10 @@ export class UpdateShipmentUseCase implements IUseCase {
         )
       : this.shipment$.getShipmentById(shipmentId).pipe(
           switchMap((shipment) => {
+            shipment.destinationAddress =
+              dto.destinationAddress || shipment.destinationAddress;
+            shipment.originAddress =
+              dto.originAddress || shipment.originAddress;
             return this.shipment$.updateShipment(shipmentId, {
               ...shipment,
               ...dto,

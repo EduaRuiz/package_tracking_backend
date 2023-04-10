@@ -75,6 +75,47 @@ describe('UpdateShipmentUseCase', () => {
         },
       });
     });
+
+    it('should update shipment with dto data undefined', (done) => {
+      // Arrange
+      const shipmentId = '1234';
+      const dto = updateShipmentDto;
+      dto.statusId = undefined;
+      dto.originAddress = undefined;
+      dto.destinationAddress = undefined;
+      const shipmentToUpdate = shipment;
+
+      jest
+        .spyOn(shipmentDomainService, 'getShipmentById')
+        .mockReturnValue(of(shipmentToUpdate));
+      jest
+        .spyOn(shipmentDomainService, 'updateShipment')
+        .mockReturnValue(of(shipmentToUpdate));
+      jest.spyOn(statusDomainService, 'getStatus').mockReturnValue(of(status));
+
+      // Act
+      const result$ = updateShipmentUseCase.execute(shipmentId, dto);
+
+      // Assert
+      result$.subscribe({
+        next: (result) => {
+          expect(result).toEqual(shipmentToUpdate);
+          expect(shipmentDomainService.getShipmentById).toHaveBeenCalledWith(
+            shipmentId,
+          );
+          expect(shipmentDomainService.updateShipment).toHaveBeenCalledWith(
+            shipmentId,
+            {
+              ...shipmentToUpdate,
+              ...dto,
+              updatedAt: expect.any(Date),
+              _id: shipmentToUpdate._id,
+            },
+          );
+          done();
+        },
+      });
+    });
   });
 
   describe('when statusId is provided', () => {

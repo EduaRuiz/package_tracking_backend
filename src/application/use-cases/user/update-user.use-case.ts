@@ -10,6 +10,8 @@ export class UpdateUserUseCase implements IUseCase {
   execute(dto: IUpdateUserDto, userId: string): Observable<UserDomainEntity> {
     return this.user$.getUserById(userId).pipe(
       switchMap((user) => {
+        user.name = dto.name || user.name;
+        user.phone = dto.phone || user.phone;
         return this.user$.updateUser(userId, {
           ...user,
           ...dto,

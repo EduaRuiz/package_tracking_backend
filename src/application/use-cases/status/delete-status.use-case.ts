@@ -5,6 +5,7 @@ import {
 import { IUseCase } from '../interface';
 import { StatusDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap, throwError } from 'rxjs';
+import { ConflictException } from '@nestjs/common';
 
 export class DeleteStatusUseCase implements IUseCase {
   constructor(
@@ -21,7 +22,10 @@ export class DeleteStatusUseCase implements IUseCase {
         return !shipment
           ? this.status$.deleteStatus(statusId)
           : throwError(
-              () => new Error('Cannot delete status because it is in use'),
+              () =>
+                new ConflictException(
+                  'Cannot delete status because it is in use',
+                ),
             );
       }),
     );

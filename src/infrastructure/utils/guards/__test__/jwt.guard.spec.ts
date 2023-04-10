@@ -24,6 +24,11 @@ describe('JwtGuard', () => {
     jwtService = moduleRef.get<JwtService>(JwtService);
   });
 
+  it('should be defined', () => {
+    // Assert
+    expect(jwtGuard).toBeDefined();
+  });
+
   describe('canActivate', () => {
     it('should return true if token is valid', (done) => {
       // Arrange

@@ -4,7 +4,16 @@ import {
   UserService,
 } from '../persistance/services';
 import { AuthService } from '../utils/services';
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { JwtGuard } from '../utils/guards';
 import { UserId } from '../utils/decorators';
 import { Observable } from 'rxjs';
@@ -56,7 +65,7 @@ export class ShipmentController {
     return this.delegator.execute(dto, userId);
   }
 
-  @Post('update/:id')
+  @Patch('update/:id')
   updateShipment(
     @Param('id', ValidateMongoId) shipmentId: string,
     @Body() dto: UpdateShipmentDto,
@@ -65,7 +74,7 @@ export class ShipmentController {
     return this.delegator.execute(shipmentId, dto);
   }
 
-  @Post('delete/:id')
+  @Delete('delete/:id')
   deleteShipment(
     @Param('id', ValidateMongoId) shipmentId: string,
     @UserId('id', ValidateMongoId) userId: string,

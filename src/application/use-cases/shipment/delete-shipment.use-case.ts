@@ -2,6 +2,7 @@ import { ShipmentDomainEntity } from 'src/domain/entities';
 import { IUseCase } from '../interface';
 import { Observable, switchMap, throwError } from 'rxjs';
 import { IShipmentDomainService } from 'src/domain/services';
+import { ConflictException } from '@nestjs/common';
 
 export class DeleteShipmentUseCase implements IUseCase {
   constructor(private readonly shipment$: IShipmentDomainService) {}
@@ -17,7 +18,7 @@ export class DeleteShipmentUseCase implements IUseCase {
           ? this.shipment$.deleteShipment(shipmentId)
           : throwError(
               () =>
-                new Error(
+                new ConflictException(
                   'Cannot delete shipment because its status is not FINALIZED',
                 ),
             );

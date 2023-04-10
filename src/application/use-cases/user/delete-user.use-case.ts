@@ -5,6 +5,7 @@ import {
 import { IUseCase } from '../interface';
 import { UserDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap, throwError } from 'rxjs';
+import { ConflictException } from '@nestjs/common';
 
 export class DeleteUserUseCase implements IUseCase {
   constructor(
@@ -24,7 +25,7 @@ export class DeleteUserUseCase implements IUseCase {
           ? this.user$.deleteUser(userId)
           : throwError(
               () =>
-                new Error(
+                new ConflictException(
                   'Cannot delete user because it has minimum one shipment with status different to FINALIZED status',
                 ),
             );

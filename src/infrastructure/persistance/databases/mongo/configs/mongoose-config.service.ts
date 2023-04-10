@@ -11,7 +11,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
 
   createMongooseOptions(): MongooseModuleOptions {
     return {
-      uri: this.configService.get<string>('MONGO_DB_URI_TRACKING'),
+      uri: this.configService.get<string>('MONGO_DB_URI_TRACKING_ONLINE'),
       dbName: this.configService.get<string>('MONGO_DB_NAME_TRACKING'),
     };
   }
