@@ -7,7 +7,6 @@ export class UserMongoModel implements IUserDomainEntity {
   constructor(
     firebaseId: string,
     email: string,
-    password: string,
     name: string,
     document: string,
     phone: string,
@@ -16,7 +15,6 @@ export class UserMongoModel implements IUserDomainEntity {
     this._id = _id;
     this.firebaseId = firebaseId;
     this.email = email;
-    this.password = password;
     this.name = name;
     this.document = document;
     this.phone = phone;
@@ -36,12 +34,6 @@ export class UserMongoModel implements IUserDomainEntity {
     type: String,
   })
   email: string;
-
-  @Prop({
-    required: true,
-    type: String,
-  })
-  password: string;
 
   @Prop({
     required: true,

@@ -4,21 +4,13 @@ describe('UserMongoModel', () => {
   let _id = '123456789';
   let firebaseId = 'firebaseId';
   let email = 'email';
-  let password = 'password';
   let name = 'name';
   let document = 'document';
   let phone = 'phone';
 
   it('should be defined', () => {
     // Act
-    const entity = new UserMongoModel(
-      firebaseId,
-      email,
-      password,
-      name,
-      document,
-      phone,
-    );
+    const entity = new UserMongoModel(firebaseId, email, name, document, phone);
 
     // Assert
     expect(entity).toBeDefined();
@@ -26,19 +18,11 @@ describe('UserMongoModel', () => {
 
   it('should defined all properties', () => {
     // Act
-    const entity = new UserMongoModel(
-      firebaseId,
-      email,
-      password,
-      name,
-      document,
-      phone,
-    );
+    const entity = new UserMongoModel(firebaseId, email, name, document, phone);
 
     // Assert
     expect(entity.firebaseId).toBeDefined();
     expect(entity.email).toBeDefined();
-    expect(entity.password).toBeDefined();
     expect(entity.name).toBeDefined();
     expect(entity.document).toBeDefined();
     expect(entity.phone).toBeDefined();
@@ -50,7 +34,6 @@ describe('UserMongoModel', () => {
     const entity = new UserMongoModel(
       firebaseId,
       email,
-      password,
       name,
       document,
       phone,
@@ -61,7 +44,6 @@ describe('UserMongoModel', () => {
     expect(entity._id).toBe(_id);
     expect(entity.firebaseId).toBe(firebaseId);
     expect(entity.email).toBe(email);
-    expect(entity.password).toBe(password);
     expect(entity.name).toBe(name);
     expect(entity.document).toBe(document);
     expect(entity.phone).toBe(phone);

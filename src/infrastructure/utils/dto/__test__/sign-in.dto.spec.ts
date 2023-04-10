@@ -6,12 +6,12 @@ describe('SignInDto', () => {
   let dto: SignInDto;
   const validData = {
     email: 'test@example.com',
-    password: 'Abc123!@#',
+    firebaseId: 'Abc123!@#',
   };
 
   const invalidData = {
     email: '',
-    password: '',
+    firebaseId: '',
   };
 
   describe('when validating SignInDto', () => {
@@ -49,7 +49,7 @@ describe('SignInDto', () => {
 
       const expectedErrors = {
         email: 'email should not be empty',
-        password: 'password should not be empty',
+        firebaseId: 'firebaseId should not be empty',
       };
 
       beforeEach(async () => {
@@ -68,7 +68,7 @@ describe('SignInDto', () => {
       it('should have expected errors', () => {
         // Assert
         expect(JSON.stringify(errors)).toContain(expectedErrors.email);
-        expect(JSON.stringify(errors)).toContain(expectedErrors.password);
+        expect(JSON.stringify(errors)).toContain(expectedErrors.firebaseId);
       });
     });
   });

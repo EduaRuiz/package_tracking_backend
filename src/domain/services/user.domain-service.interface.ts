@@ -4,13 +4,8 @@ import { Observable } from 'rxjs';
 export interface IUserDomainService<
   Entity extends UserDomainEntity = UserDomainEntity,
 > {
-  signIn(email: string, password: string): Observable<Entity>;
+  signIn(email: string, firebase: string): Observable<Entity>;
   signUp(entity: Entity): Observable<Entity>;
-  resetPassword(
-    userId: string,
-    oldPassword: string,
-    newPassword: string,
-  ): Observable<Entity>;
   getUserById(entityId: string): Observable<Entity>;
   updateUser(entityId: string, entity: Entity): Observable<Entity>;
   deleteUser(entityId: string): Observable<Entity>;

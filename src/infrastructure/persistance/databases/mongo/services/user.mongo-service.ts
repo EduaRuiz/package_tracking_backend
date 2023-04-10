@@ -25,7 +25,7 @@ export class UserMongoService implements IUserDomainService {
     return this.userRepository.delete(entityId);
   }
 
-  signIn(email: string, password: string): Observable<UserMongoModel> {
+  signIn(email: string, firebaseId: string): Observable<UserMongoModel> {
     return this.getAllUsers().pipe(
       map((users: UserMongoModel[]) =>
         users.find((user) => user.email === email),
@@ -33,11 +33,11 @@ export class UserMongoService implements IUserDomainService {
       switchMap((user: UserMongoModel) => {
         return !user
           ? throwError(() => new NotFoundException('User not found'))
-          : from(compare(password, user.password)).pipe(
+          : from(compare(firebaseId, user.firebaseId)).pipe(
               switchMap((isMatch: boolean) => {
                 return !isMatch
                   ? throwError(
-                      () => new BadRequestException('Invalid password'),
+                      () => new BadRequestException('Invalid firebaseId'),
                     )
                   : of(user);
               }),
@@ -47,39 +47,12 @@ export class UserMongoService implements IUserDomainService {
   }
 
   signUp(entity: UserMongoModel): Observable<UserMongoModel> {
-    return from(hash(entity.password, 10)).pipe(
+    return from(hash(entity.firebaseId, 10)).pipe(
       switchMap((hashedPassword: string) => {
         return this.userRepository.create({
           ...entity,
-          password: hashedPassword,
+          firebaseId: hashedPassword,
         });
-      }),
-    );
-  }
-
-  resetPassword(
-    userId: string,
-    oldPassword: string,
-    newPassword: string,
-  ): Observable<UserMongoModel> {
-    return this.getUserById(userId).pipe(
-      switchMap((user: UserMongoModel) => {
-        return from(compare(oldPassword, user.password)).pipe(
-          switchMap((isMatch: boolean) => {
-            return !isMatch
-              ? throwError(() => new BadRequestException('Invalid password'))
-              : of(user).pipe(
-                  switchMap((user: UserMongoModel) => {
-                    return from(hash(newPassword, 10)).pipe(
-                      switchMap((hashedPassword: string) => {
-                        user.password = hashedPassword;
-                        return this.userRepository.update(user._id, user);
-                      }),
-                    );
-                  }),
-                );
-          }),
-        );
       }),
     );
   }

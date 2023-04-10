@@ -56,7 +56,6 @@ describe('ShipmentMongoService', () => {
         _id: '1',
         name: 'Test User',
         email: 'email',
-        password: 'password',
         document: 'document',
         firebaseId: 'firebaseId',
         phone: 'phone',

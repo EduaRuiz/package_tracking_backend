@@ -10,7 +10,6 @@ import {
   CreateUserUseCase,
   DeleteUserUseCase,
   GetUserUseCase,
-  ResetPasswordUseCase,
   SignInUseCase,
   SingUpUseCase,
   UpdateUserUseCase,
@@ -41,7 +40,6 @@ describe('PackageTrackingDelegate', () => {
     userDomainService = {
       signIn: jest.fn(),
       signUp: jest.fn(),
-      resetPassword: jest.fn(),
       getUserById: jest.fn(),
       getAllUsers: jest.fn(),
       deleteUser: jest.fn(),
@@ -82,17 +80,17 @@ describe('PackageTrackingDelegate', () => {
     // Arrange
     packageTrackingDelegate.toSignIn();
     const username = 'test-user';
-    const password = 'test-password';
+    const firebaseId = 'test-firebaseId';
     jest
       .spyOn(authDomainService, 'generateAuthResponse')
-      .mockReturnValue(of({ username, password } as any));
+      .mockReturnValue(of({ username, firebaseId } as any));
 
     jest
       .spyOn(userDomainService, 'signIn')
-      .mockReturnValue(of({ username, password } as any));
+      .mockReturnValue(of({ username, firebaseId } as any));
 
     // Act
-    const result$ = packageTrackingDelegate.execute(username, password);
+    const result$ = packageTrackingDelegate.execute(username, firebaseId);
 
     // Assert
     result$.subscribe({
@@ -100,7 +98,7 @@ describe('PackageTrackingDelegate', () => {
         expect(result).toBeTruthy();
         expect(authDomainService.generateAuthResponse).toHaveBeenCalledWith({
           username,
-          password,
+          firebaseId,
         });
         done();
       },
@@ -111,21 +109,21 @@ describe('PackageTrackingDelegate', () => {
     // Arrange
     packageTrackingDelegate.toSignUp();
     const username = 'test-user';
-    const password = 'test-password';
+    const firebaseId = 'test-firebaseId';
     jest
       .spyOn(userDomainService, 'signUp')
-      .mockReturnValue(of({ username, password } as any));
+      .mockReturnValue(of({ username, firebaseId } as any));
     jest
       .spyOn(authDomainService, 'generateAuthResponse')
-      .mockReturnValue(of({ username, password } as any));
+      .mockReturnValue(of({ username, firebaseId } as any));
     jest
       .spyOn(userDomainService, 'getUserById')
-      .mockReturnValue(of({ username, password } as any));
+      .mockReturnValue(of({ username, firebaseId } as any));
 
     jest.spyOn(userDomainService, 'getAllUsers').mockReturnValue(of([]));
 
     // Act
-    const result$ = packageTrackingDelegate.execute(username, password);
+    const result$ = packageTrackingDelegate.execute(username, firebaseId);
 
     // Assert
     result$.subscribe({
@@ -134,7 +132,7 @@ describe('PackageTrackingDelegate', () => {
         expect(userDomainService.signUp).toHaveBeenCalledWith(username);
         expect(authDomainService.generateAuthResponse).toHaveBeenCalledWith({
           username,
-          password,
+          firebaseId,
         });
         done();
       },
@@ -232,41 +230,6 @@ describe('PackageTrackingDelegate', () => {
     });
   });
 
-  it('should reset password successfully', (done) => {
-    // Arrange
-    packageTrackingDelegate.toResetPassword();
-    const userId = '123';
-    const oldPassword = 'test-user';
-    const newPassword = 'test-newPassword';
-    jest
-      .spyOn(userDomainService, 'getUserById')
-      .mockReturnValue(of({ oldPassword, newPassword, _id: userId } as any));
-
-    jest
-      .spyOn(userDomainService, 'resetPassword')
-      .mockReturnValue(of({ oldPassword, newPassword } as any));
-
-    // Act
-    const result$ = packageTrackingDelegate.execute(
-      { oldPassword, newPassword },
-      userId,
-    );
-
-    // Assert
-    result$.subscribe({
-      next: (result) => {
-        expect(result).toBeTruthy();
-        expect(userDomainService.getUserById).toHaveBeenCalledWith(userId);
-        expect(userDomainService.resetPassword).toHaveBeenCalledWith(
-          userId,
-          oldPassword,
-          newPassword,
-        );
-        done();
-      },
-    });
-  });
-
   it('should update shipment status successfully', (done) => {
     // Arrange
     packageTrackingDelegate.toUpdateShipment();
@@ -349,18 +312,6 @@ describe('PackageTrackingDelegate', () => {
       // Assert
       expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
         GetShipmentsByUserUseCase,
-      );
-    });
-  });
-
-  describe('when calling toResetPassword', () => {
-    it('should instantiate ResetPasswordUseCase', () => {
-      // Act
-      packageTrackingDelegate.toResetPassword();
-
-      // Assert
-      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
-        ResetPasswordUseCase,
       );
     });
   });

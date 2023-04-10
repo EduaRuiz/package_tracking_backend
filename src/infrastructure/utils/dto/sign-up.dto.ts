@@ -26,20 +26,8 @@ export class SignUpDto implements ISignUpDto {
 
   @IsString()
   @IsDefined()
-  @Matches(
-    new RegExp(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/g,
-    ),
-    {
-      message: 'Password is not valid',
-    },
-  )
-  password: string;
-
-  @IsString()
-  @IsDefined()
   @IsNotEmpty()
-  @MinLength(10)
+  @MinLength(5)
   @MaxLength(30)
   name: string;
 

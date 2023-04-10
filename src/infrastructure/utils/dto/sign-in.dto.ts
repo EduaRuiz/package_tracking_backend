@@ -10,5 +10,5 @@ export class SignInDto implements ISignInDto {
   @IsString()
   @IsDefined()
   @IsNotEmpty()
-  password: string;
+  firebaseId: string;
 }

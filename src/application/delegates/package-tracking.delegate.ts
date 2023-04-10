@@ -22,7 +22,6 @@ import {
   // UserUseCases
   DeleteUserUseCase,
   GetUserUseCase,
-  ResetPasswordUseCase,
   SignInUseCase,
   SingUpUseCase,
   UpdateUserUseCase,
@@ -60,10 +59,6 @@ export class PackageTrackingDelegate implements IUseCase {
 
   toGetShipmentsByUser(): void {
     this.delegate = new GetShipmentsByUserUseCase(this.shipment$);
-  }
-
-  toResetPassword(): void {
-    this.delegate = new ResetPasswordUseCase(this.user$);
   }
 
   toUpdateShipment(): void {

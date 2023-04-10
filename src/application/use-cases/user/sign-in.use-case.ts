@@ -13,7 +13,7 @@ export class SignInUseCase implements IUseCase {
 
   execute(dto: ISignInDto): Observable<IUserResponse> {
     return this.user$
-      .signIn(dto.email, dto.password)
+      .signIn(dto.email, dto.firebaseId)
       .pipe(
         switchMap((user: UserDomainEntity) =>
           this.auth$.generateAuthResponse(user),

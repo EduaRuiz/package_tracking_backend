@@ -36,23 +36,62 @@ describe('UserMongoService', () => {
     expect(service).toBeDefined();
   });
 
+  describe('getUserById', () => {
+    it('should return a user when user is found', (done) => {
+      // Arrange
+      const user: UserMongoModel = {} as unknown as UserMongoModel;
+      jest.spyOn(repository, 'findOneById').mockReturnValue(of(user));
+
+      // Act
+      const result$ = service.getUserById('1');
+
+      // Assert
+      result$.subscribe({
+        next: (result) => {
+          expect(result).toEqual(user);
+          done();
+        },
+      });
+    });
+
+    it('should throw NotFoundException when user is not found', (done) => {
+      // Arrange
+      const message = 'User not found';
+      jest
+        .spyOn(repository, 'findOneById')
+        .mockReturnValue(throwError(() => new NotFoundException(message)));
+
+      // Act
+      const result$ = service.getUserById('1');
+
+      // Assert
+      result$.subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(NotFoundException);
+          expect(error.message).toBe(message);
+          done();
+        },
+      });
+    });
+  });
+
   describe('signIn', () => {
     const email = 'test@test.com';
-    const password = 'Password';
-    const hashedPassword =
-      '$2a$10$4RqipeZz4vz5RWAWmQFD9u81Ytak8kR73yejV6gQ4gnTV4qA1oide';
+    const firebaseId = 'vZcewrdlV72DHVWORTEa';
+    const hashedFirebaseId =
+      '$2a$10$zcya2vOf9boqWXGsS8IbSOQRachOsyiPz33eMm7gSKrtep8U10lvO';
 
-    it('should return a user when email and password match', (done) => {
+    it('should return a user when email and firebaseId match', (done) => {
       // Arrange
       const user: UserMongoModel = {
         _id: '1',
         email: email,
-        password: hashedPassword,
+        firebaseId: hashedFirebaseId,
       } as unknown as UserMongoModel;
       jest.spyOn(repository, 'findAll').mockReturnValue(of([user]));
 
       // Act
-      const result$ = service.signIn(email, password);
+      const result$ = service.signIn(email, firebaseId);
 
       // Assert
       result$.subscribe({
@@ -66,7 +105,7 @@ describe('UserMongoService', () => {
     it('should throw NotFoundException when email is not found', (done) => {
       jest.spyOn(repository, 'findAll').mockReturnValue(of([]));
 
-      service.signIn(email, password).subscribe({
+      service.signIn(email, firebaseId).subscribe({
         error: (error) => {
           expect(error).toBeInstanceOf(NotFoundException);
           expect(error.message).toBe('User not found');
@@ -75,18 +114,18 @@ describe('UserMongoService', () => {
       });
     });
 
-    it('should throw BadRequestException when password is invalid', (done) => {
+    it('should throw BadRequestException when firebaseId is invalid', (done) => {
       const user: UserMongoModel = {
         _id: '1',
         email: email,
-        password: hashedPassword,
+        firebaseId: hashedFirebaseId,
       } as unknown as UserMongoModel;
       jest.spyOn(repository, 'findAll').mockReturnValue(of([user]));
 
-      service.signIn(email, 'wrong-password').subscribe({
+      service.signIn(email, 'wrong-firebaseId').subscribe({
         error: (error) => {
           expect(error).toBeInstanceOf(BadRequestException);
-          expect(error.message).toBe('Invalid password');
+          expect(error.message).toBe('Invalid firebaseId');
           done();
         },
       });
@@ -97,7 +136,7 @@ describe('UserMongoService', () => {
         .spyOn(repository, 'findAll')
         .mockReturnValue(throwError(() => new Error()));
 
-      service.signIn(email, password).subscribe({
+      service.signIn(email, firebaseId).subscribe({
         error: (error) => {
           expect(error).toBeInstanceOf(Error);
           done();
@@ -110,9 +149,9 @@ describe('UserMongoService', () => {
     const user: UserMongoModel = {
       _id: '1',
       email: 'test@test.com',
-      password: 'password',
+      firebaseId: 'firebaseId',
     } as unknown as UserMongoModel;
-    const hashedPassword =
+    const hashedFirebaseId =
       '$2a$10$4RqipeZz4vz5RWAWmQFD9u81Ytak8kR73yejV6gQ4gnTV4qA1oide';
 
     it('should return a user when email is not found', (done) => {
@@ -126,59 +165,13 @@ describe('UserMongoService', () => {
     });
   });
 
-  describe('resetPassword', () => {
-    let oldPassword = 'oldPassword';
-    const newPassword = 'newPassword';
-    const user: UserMongoModel = {
-      _id: '1',
-      email: 'mail.com',
-      password: '$2a$10$48ufItLfsD5uXI.2RNeYbuWkFwZW8U0XXxVaq8bJyOY7v2DQHI7rC',
-    } as unknown as UserMongoModel;
-
-    it('should return a user', (done) => {
-      // Arrange
-      jest.spyOn(repository, 'findOneById').mockReturnValue(of(user));
-      jest.spyOn(repository, 'update').mockReturnValue(of(user));
-
-      // Act
-      const result$ = service.resetPassword(user._id, oldPassword, newPassword);
-
-      // Assert
-      result$.subscribe({
-        next: (result) => {
-          expect(result).toEqual(user);
-          done();
-        },
-      });
-    });
-
-    it('should throw BadRequestException when password is invalid', (done) => {
-      // Arrange
-      oldPassword = 'wrongPassword';
-      const message = 'Invalid password';
-      jest.spyOn(repository, 'findOneById').mockReturnValue(of(user));
-
-      // Act
-      const result$ = service.resetPassword(user._id, oldPassword, newPassword);
-
-      // Assert
-      result$.subscribe({
-        error: (error) => {
-          expect(error).toBeInstanceOf(BadRequestException);
-          expect(error.message).toBe(message);
-          done();
-        },
-      });
-    });
-  });
-
   describe('delete', () => {
     it('should return a user', (done) => {
       // Arrange
       const user: UserMongoModel = {
         _id: '1',
         email: 'email',
-        password: 'password',
+        firebaseId: 'firebaseId',
       } as unknown as UserMongoModel;
       jest.spyOn(repository, 'delete').mockReturnValue(of(user));
 
@@ -201,7 +194,7 @@ describe('UserMongoService', () => {
       const user: UserMongoModel = {
         _id: '1',
         email: 'email',
-        password: 'password',
+        firebaseId: 'firebaseId',
       } as unknown as UserMongoModel;
       jest.spyOn(repository, 'update').mockReturnValue(of(user));
 

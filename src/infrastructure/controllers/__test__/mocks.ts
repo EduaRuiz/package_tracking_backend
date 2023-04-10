@@ -1,6 +1,5 @@
 import {
   IRegisterNewShipmentDto,
-  IResetPasswordDto,
   ISignInDto,
   ISignUpDto,
   IUpdateShipmentDto,
@@ -21,7 +20,6 @@ export const user: IUserDomainEntity = {
   firebaseId: 'firebaseId',
   name: 'name',
   email: 'email',
-  password: 'password',
   document: 'document',
   phone: 'phone',
 };
@@ -54,22 +52,15 @@ export const registerNewShipmentDto: IRegisterNewShipmentDto = {
   userId: 'userId',
 };
 
-export const resetPasswordDto: IResetPasswordDto = {
-  newPassword: 'newPassword',
-  oldPassword: 'oldPassword',
-  userId: 'userId',
-};
-
 export const signInDto: ISignInDto = {
   email: 'email',
-  password: 'password',
+  firebaseId: 'firebaseId',
 };
 
 export const signUpDto: ISignUpDto = {
   name: 'name',
   firebaseId: 'firebaseId',
   email: 'email',
-  password: 'password',
   document: 'document',
   phone: 'phone',
 };

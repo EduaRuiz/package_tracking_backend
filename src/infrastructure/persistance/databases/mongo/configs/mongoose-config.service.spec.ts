@@ -11,9 +11,9 @@ describe('MongooseConfigService', () => {
     mockConfigService = {
       get: jest.fn((key: string) => {
         return key === 'MONGO_DB_URI_TRACKING'
-          ? 'mongodb://localhost:27017'
+          ? 'mongodb+srv://root:password*@tracking.dcufusb.mongodb.net'
           : key === 'MONGO_DB_NAME_TRACKING'
-          ? 'Packaging'
+          ? 'tracking'
           : '';
       }),
     } as unknown as jest.Mocked<ConfigService>;
@@ -42,7 +42,9 @@ describe('MongooseConfigService', () => {
     const options = service.createMongooseOptions();
 
     // Assert
-    expect(options.dbName).toEqual('Packaging');
-    expect(options.uri).toEqual('mongodb://localhost:27017');
+    expect(options.dbName).toEqual('tracking');
+    expect(options.uri).toEqual(
+      'mongodb+srv://root:password*@tracking.dcufusb.mongodb.net',
+    );
   });
 });

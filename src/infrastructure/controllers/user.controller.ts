@@ -13,12 +13,7 @@ import {
   StatusService,
   UserService,
 } from '../persistance/services';
-import {
-  ResetPasswordDto,
-  SignInDto,
-  SignUpDto,
-  UpdateUserDto,
-} from '../utils/dto';
+import { SignInDto, SignUpDto, UpdateUserDto } from '../utils/dto';
 import { Observable } from 'rxjs';
 import { AuthService } from '../utils/services';
 import { IUserResponse } from 'src/domain/interfaces';
@@ -56,16 +51,6 @@ export class UserController {
   signIn(@Body() dto: SignInDto): Observable<IUserResponse> {
     this.delegator.toSignIn();
     return this.delegator.execute(dto);
-  }
-
-  @UseGuards(JwtGuard)
-  @Patch('password-reset')
-  resetPassword(
-    @Body() dto: ResetPasswordDto,
-    @UserId('id', ValidateMongoId) userId: string,
-  ) {
-    this.delegator.toResetPassword();
-    return this.delegator.execute(dto, userId);
   }
 
   @UseGuards(JwtGuard)

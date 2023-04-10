@@ -4,7 +4,6 @@ describe('UserDomainEntity', () => {
   let _id = '123456789';
   let firebaseId = 'firebaseId';
   let email = 'email';
-  let password = 'password';
   let name = 'name';
   let document = 'document';
   let phone = 'phone';
@@ -14,7 +13,6 @@ describe('UserDomainEntity', () => {
     const entity = new UserDomainEntity(
       firebaseId,
       email,
-      password,
       name,
       document,
       phone,
@@ -29,7 +27,6 @@ describe('UserDomainEntity', () => {
     const entity = new UserDomainEntity(
       firebaseId,
       email,
-      password,
       name,
       document,
       phone,
@@ -38,7 +35,6 @@ describe('UserDomainEntity', () => {
     // Assert
     expect(entity.firebaseId).toBeDefined();
     expect(entity.email).toBeDefined();
-    expect(entity.password).toBeDefined();
     expect(entity.name).toBeDefined();
     expect(entity.document).toBeDefined();
     expect(entity.phone).toBeDefined();
@@ -50,7 +46,6 @@ describe('UserDomainEntity', () => {
     const entity = new UserDomainEntity(
       firebaseId,
       email,
-      password,
       name,
       document,
       phone,
@@ -61,7 +56,6 @@ describe('UserDomainEntity', () => {
     expect(entity._id).toBe(_id);
     expect(entity.firebaseId).toBe(firebaseId);
     expect(entity.email).toBe(email);
-    expect(entity.password).toBe(password);
     expect(entity.name).toBe(name);
     expect(entity.document).toBe(document);
     expect(entity.phone).toBe(phone);

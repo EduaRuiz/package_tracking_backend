@@ -8,7 +8,7 @@ import {
 import { AuthService } from '@infrastructure/utils/services';
 import { JwtService } from '@nestjs/jwt';
 import { PackageTrackingDelegate } from '@application/delegates';
-import { resetPasswordDto, updateUserDto, user, userResponse } from './mocks';
+import { updateUserDto, user, userResponse } from './mocks';
 import { of, throwError } from 'rxjs';
 
 describe('UserController', () => {
@@ -125,60 +125,6 @@ describe('UserController', () => {
 
       // Act
       const result$ = controller.signIn({} as any);
-
-      // Assert
-      expect(spy).toHaveBeenCalled();
-      result$.subscribe({
-        error: (err) => {
-          expect(err).toEqual(error);
-          done();
-        },
-      });
-    });
-  });
-
-  describe('resetPassword', () => {
-    it('should call the delegator to reset password', (done) => {
-      // Arrange
-      const dto = resetPasswordDto;
-      const userId = dto.userId;
-      const expected = userResponse;
-      const spy = jest.spyOn(
-        PackageTrackingDelegate.prototype,
-        'toResetPassword',
-      );
-      jest
-        .spyOn(PackageTrackingDelegate.prototype, 'execute')
-        .mockReturnValue(of(userResponse));
-
-      // Act
-      const result$ = controller.resetPassword(dto, userId);
-
-      // Assert
-      expect(spy).toHaveBeenCalled();
-      result$.subscribe({
-        next: (result) => {
-          expect(result).toEqual(expected);
-          done();
-        },
-      });
-    });
-
-    it('should call the delegator to reset password and throw an error', (done) => {
-      // Arrange
-      const dto = resetPasswordDto;
-      const userId = dto.userId;
-      const spy = jest.spyOn(
-        PackageTrackingDelegate.prototype,
-        'toResetPassword',
-      );
-      const error = new Error('error');
-      jest
-        .spyOn(PackageTrackingDelegate.prototype, 'execute')
-        .mockReturnValue(throwError(() => error));
-
-      // Act
-      const result$ = controller.resetPassword(dto, userId);
 
       // Assert
       expect(spy).toHaveBeenCalled();
