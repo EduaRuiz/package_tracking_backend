@@ -13,23 +13,25 @@ export class DeleteUserUseCase implements IUseCase {
     private readonly shipment$: IShipmentDomainService,
   ) {}
 
-  execute(userId: string): Observable<UserDomainEntity> {
-    return this.shipment$.getAllShipments().pipe(
-      switchMap((shipments) => {
-        const shipment = shipments.find(
-          (shipment) =>
-            shipment.user._id.toString() === userId &&
-            shipment.status.name !== 'FINALIZED',
-        );
-        return !shipment
-          ? this.user$.deleteUser(userId)
-          : throwError(
-              () =>
-                new ConflictException(
-                  'Cannot delete user because it has minimum one shipment with status different to FINALIZED status',
-                ),
+  execute(userId: string, currentUserId: string): Observable<UserDomainEntity> {
+    return userId !== currentUserId
+      ? throwError(new ConflictException('Cannot delete other user'))
+      : this.shipment$.getAllShipments().pipe(
+          switchMap((shipments) => {
+            const shipment = shipments.find(
+              (shipment) =>
+                shipment.user._id.toString() === userId &&
+                shipment.status.name !== 'FINALIZED',
             );
-      }),
-    );
+            return !shipment
+              ? this.user$.deleteUser(userId)
+              : throwError(
+                  () =>
+                    new ConflictException(
+                      'Cannot delete user because it has minimum one shipment with status different to FINALIZED status',
+                    ),
+                );
+          }),
+        );
   }
 }

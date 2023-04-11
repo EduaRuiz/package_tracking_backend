@@ -23,7 +23,7 @@ import {
   DeleteUserUseCase,
   GetUserUseCase,
   SignInUseCase,
-  SingUpUseCase,
+  SignUpUseCase,
   UpdateUserUseCase,
 } from '../use-cases';
 
@@ -46,7 +46,7 @@ export class PackageTrackingDelegate implements IUseCase {
   }
 
   toSignUp(): void {
-    this.delegate = new SingUpUseCase(this.user$, this.auth$);
+    this.delegate = new SignUpUseCase(this.user$, this.auth$);
   }
 
   toRegisterNewShipment(): void {

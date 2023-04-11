@@ -2,7 +2,7 @@ import { IAuthDomainService, IUserDomainService } from 'src/domain/services';
 import { IUseCase } from '../../interface';
 import { signUpDto, user, userResponse } from './mocks';
 import { of } from 'rxjs';
-import { SingUpUseCase } from '..';
+import { SignUpUseCase } from '..';
 import { ConflictException } from '@nestjs/common';
 
 let signUpUseCase: IUseCase;
@@ -21,7 +21,7 @@ describe('SignUpUseCase', () => {
     };
 
     // Act
-    signUpUseCase = new SingUpUseCase(userDomainService, authDomainService);
+    signUpUseCase = new SignUpUseCase(userDomainService, authDomainService);
   });
 
   it('should be defined', () => {

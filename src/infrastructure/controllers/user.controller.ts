@@ -80,11 +80,12 @@ export class UserController {
   }
 
   @UseGuards(JwtGuard)
-  @Delete('delete')
+  @Delete('delete/:id')
   deleteUser(
-    @UserId('id', ValidateMongoId) userId: string,
+    @Param('id', ValidateMongoId) userId: string,
+    @UserId('id', ValidateMongoId) currentUserId: string,
   ): Observable<UserEntity> {
     this.delegator.toDeleteUser();
-    return this.delegator.execute(userId);
+    return this.delegator.execute(userId, currentUserId);
   }
 }

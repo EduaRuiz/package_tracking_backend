@@ -6,13 +6,13 @@ describe('UpdateUserDto', () => {
   let dto: UpdateUserDto;
   const validData = {
     _id: '619b7d6a2e6f7a6e1c6a7d1d',
-    name: 'John Doe',
+    document: '89101112',
     phone: '1234567',
   };
 
   const invalidData = {
     _id: 'invalid-id',
-    name: '',
+    document: 'abv123',
     phone: 'abc123',
   };
 
@@ -51,7 +51,7 @@ describe('UpdateUserDto', () => {
 
       const expectedErrors = {
         _id: 'id must be a mongodb id',
-        name: 'name should not be empty',
+        document: 'phone must be a number string',
         phone: 'phone must be a number string',
       };
 
@@ -71,7 +71,7 @@ describe('UpdateUserDto', () => {
       it('should have expected errors', () => {
         // Assert
         expect(JSON.stringify(errors)).toContain(expectedErrors._id);
-        expect(JSON.stringify(errors)).toContain(expectedErrors.name);
+        expect(JSON.stringify(errors)).toContain(expectedErrors.document);
         expect(JSON.stringify(errors)).toContain(expectedErrors.phone);
       });
     });

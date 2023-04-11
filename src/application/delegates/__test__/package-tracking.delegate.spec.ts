@@ -11,7 +11,7 @@ import {
   DeleteUserUseCase,
   GetUserUseCase,
   SignInUseCase,
-  SingUpUseCase,
+  SignUpUseCase,
   UpdateUserUseCase,
 } from '@use-cases/user';
 import {
@@ -271,12 +271,12 @@ describe('PackageTrackingDelegate', () => {
   });
 
   describe('when calling toSignUp', () => {
-    it('should instantiate SingUpUseCase', () => {
+    it('should instantiate SignUpUseCase', () => {
       // Act
       packageTrackingDelegate.toSignUp();
 
       // Assert
-      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(SingUpUseCase);
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(SignUpUseCase);
     });
   });
 

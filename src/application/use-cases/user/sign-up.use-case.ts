@@ -6,7 +6,7 @@ import { UserDomainEntity } from 'src/domain/entities';
 import { IUserResponse } from 'src/domain/interfaces';
 import { ConflictException } from '@nestjs/common';
 
-export class SingUpUseCase implements IUseCase {
+export class SignUpUseCase implements IUseCase {
   constructor(
     private readonly user$: IUserDomainService,
     private readonly auth$: IAuthDomainService,

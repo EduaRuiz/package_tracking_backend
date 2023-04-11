@@ -278,13 +278,14 @@ describe('UserController', () => {
       // Arrange
       const expected = user;
       const userId = 'userId';
+      const currentUserId = 'userId';
       const spy = jest.spyOn(PackageTrackingDelegate.prototype, 'toDeleteUser');
       jest
         .spyOn(PackageTrackingDelegate.prototype, 'execute')
         .mockReturnValue(of(user));
 
       // Act
-      const result$ = controller.deleteUser(userId);
+      const result$ = controller.deleteUser(userId, currentUserId);
 
       // Assert
       expect(spy).toHaveBeenCalled();
@@ -299,6 +300,7 @@ describe('UserController', () => {
     it('should call the delegator to delete user and throw an error', (done) => {
       // Arrange
       const userId = 'userId';
+      const currentUserId = 'userId';
       const spy = jest.spyOn(PackageTrackingDelegate.prototype, 'toDeleteUser');
       const error = new Error('error');
       jest
@@ -306,7 +308,7 @@ describe('UserController', () => {
         .mockReturnValue(throwError(() => error));
 
       // Act
-      const result$ = controller.deleteUser(userId);
+      const result$ = controller.deleteUser(userId, currentUserId);
 
       // Assert
       expect(spy).toHaveBeenCalled();
