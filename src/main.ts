@@ -9,8 +9,9 @@ async function bootstrap() {
     origin: [
       'https://package-tracking-d5e6a.web.app',
       'https://www.google.com',
+      'http://localhost:4200',
     ],
-    methods: ['POST', 'PUT', 'DELETE', 'GET'],
+    methods: ['POST', 'PUT', 'DELETE', 'GET', 'PATCH'],
   });
   await app.listen(process.env.PORT || 3000);
 }

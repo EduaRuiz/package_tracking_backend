@@ -25,6 +25,7 @@ import {
   SignInUseCase,
   SignUpUseCase,
   UpdateUserUseCase,
+  RefreshTokenUseCase,
 } from '../use-cases';
 
 export class PackageTrackingDelegate implements IUseCase {
@@ -99,5 +100,9 @@ export class PackageTrackingDelegate implements IUseCase {
 
   toDeleteStatus(): void {
     this.delegate = new DeleteStatusUseCase(this.status$, this.shipment$);
+  }
+
+  toRefreshToken(): void {
+    this.delegate = new RefreshTokenUseCase(this.user$, this.auth$);
   }
 }

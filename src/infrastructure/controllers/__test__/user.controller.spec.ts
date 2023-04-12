@@ -320,4 +320,54 @@ describe('UserController', () => {
       });
     });
   });
+
+  describe('refreshToken', () => {
+    it('should call the delegator to refresh token', (done) => {
+      // Arrange
+      const expected = user;
+      const spy = jest.spyOn(
+        PackageTrackingDelegate.prototype,
+        'toRefreshToken',
+      );
+      jest
+        .spyOn(PackageTrackingDelegate.prototype, 'execute')
+        .mockReturnValue(of(user));
+
+      // Act
+      const result$ = controller.refreshToken({} as any);
+
+      // Assert
+      expect(spy).toHaveBeenCalled();
+      result$.subscribe({
+        next: (result) => {
+          expect(result).toEqual(expected);
+          done();
+        },
+      });
+    });
+
+    it('should call the delegator to refresh token and throw an error', (done) => {
+      // Arrange
+      const spy = jest.spyOn(
+        PackageTrackingDelegate.prototype,
+        'toRefreshToken',
+      );
+      const error = new Error('error');
+      jest
+        .spyOn(PackageTrackingDelegate.prototype, 'execute')
+        .mockReturnValue(throwError(() => error));
+
+      // Act
+      const result$ = controller.refreshToken({} as any);
+
+      // Assert
+      expect(spy).toHaveBeenCalled();
+      result$.subscribe({
+        error: (err) => {
+          expect(err).toEqual(error);
+          done();
+        },
+      });
+    });
+  });
 });

@@ -10,6 +10,7 @@ import {
   CreateUserUseCase,
   DeleteUserUseCase,
   GetUserUseCase,
+  RefreshTokenUseCase,
   SignInUseCase,
   SignUpUseCase,
   UpdateUserUseCase,
@@ -432,6 +433,18 @@ describe('PackageTrackingDelegate', () => {
       // Assert
       expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
         DeleteStatusUseCase,
+      );
+    });
+  });
+
+  describe('when calling toRefreshToken', () => {
+    it('should instantiate RefreshTokenUseCase', () => {
+      // Act
+      packageTrackingDelegate.toRefreshToken();
+
+      // Assert
+      expect(packageTrackingDelegate['delegate']).toBeInstanceOf(
+        RefreshTokenUseCase,
       );
     });
   });

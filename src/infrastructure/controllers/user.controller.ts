@@ -88,4 +88,13 @@ export class UserController {
     this.delegator.toDeleteUser();
     return this.delegator.execute(userId, currentUserId);
   }
+
+  @UseGuards(JwtGuard)
+  @Get('refresh-token')
+  refreshToken(
+    @UserId('id', ValidateMongoId) userId: string,
+  ): Observable<string> {
+    this.delegator.toRefreshToken();
+    return this.delegator.execute(userId);
+  }
 }
