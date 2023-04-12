@@ -91,7 +91,9 @@ export class UserController {
 
   @UseGuards(JwtGuard)
   @Get('token/refresh')
-  refreshToken(@UserId('id') userId: string): Observable<string> {
+  refreshToken(
+    @UserId('id', ValidateMongoId) userId: string,
+  ): Observable<string> {
     this.delegator.toRefreshToken();
     return this.delegator.execute(userId);
   }
