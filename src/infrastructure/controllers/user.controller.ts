@@ -93,7 +93,7 @@ export class UserController {
   @Get('token/refresh')
   refreshToken(
     @UserId('id', ValidateMongoId) userId: string,
-  ): Observable<string> {
+  ): Observable<IUserResponse> {
     this.delegator.toRefreshToken();
     return this.delegator.execute(userId);
   }

@@ -10,14 +10,12 @@ export class RefreshTokenUseCase implements IUseCase {
     private readonly auth$: IAuthDomainService,
   ) {}
 
-  execute(userId: string): Observable<string> {
+  execute(userId: string): Observable<IUserResponse> {
     return this.user$
       .getUserById(userId)
       .pipe(
         switchMap((user: IUserDomainEntity) =>
-          this.auth$
-            .generateAuthResponse(user)
-            .pipe(switchMap((response: IUserResponse) => of(response.token))),
+          this.auth$.generateAuthResponse(user),
         ),
       );
   }

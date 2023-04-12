@@ -40,7 +40,7 @@ describe('RefreshTokenUseCase', () => {
     // Assert
     result$.subscribe({
       next: (result) => {
-        expect(result).toBe(expectedToken);
+        expect(result.token).toBe(expectedToken);
         done();
       },
     });
