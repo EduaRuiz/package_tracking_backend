@@ -14,7 +14,7 @@ export class SignUpDto implements ISignUpDto {
   @IsString()
   @IsDefined()
   @IsNotEmpty()
-  @Matches(new RegExp(/^[a-zA-Z0-9_-]{20}$/g), {
+  @Matches(new RegExp(/^[A-Za-z0-9]{20,28}$/g), {
     message: 'FirebaseId is not valid',
   })
   firebaseId: string;
