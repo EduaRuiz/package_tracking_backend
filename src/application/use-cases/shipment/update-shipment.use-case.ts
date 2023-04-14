@@ -27,11 +27,11 @@ export class UpdateShipmentUseCase implements IUseCase {
                 shipment.originAddress =
                   dto.originAddress || shipment.originAddress;
                 shipment.status = status;
+                shipment.updatedAt = new Date();
                 return this.shipment$.updateShipment(shipmentId, {
                   ...shipment,
                   ...dto,
                   status,
-                  updatedAt: new Date(),
                   _id: shipment._id,
                 });
               }),
@@ -44,6 +44,7 @@ export class UpdateShipmentUseCase implements IUseCase {
               dto.destinationAddress || shipment.destinationAddress;
             shipment.originAddress =
               dto.originAddress || shipment.originAddress;
+            shipment.updatedAt = new Date();
             return this.shipment$.updateShipment(shipmentId, {
               ...shipment,
               ...dto,
