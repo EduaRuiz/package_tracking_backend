@@ -18,6 +18,12 @@ export class RegisterNewShipmentDto implements IRegisterNewShipmentDto {
   @IsDefined()
   @IsNotEmpty()
   @MinLength(10)
+  description: string;
+
+  @IsString()
+  @IsDefined()
+  @IsNotEmpty()
+  @MinLength(10)
   originAddress: string;
 
   @IsString()

@@ -49,6 +49,7 @@ describe('ShipmentMongoService', () => {
     // Arrange
     let entity: ShipmentMongoModel = {
       _id: '1',
+      description: 'Test Description',
       originAddress: 'Test Origin Address',
       destinationAddress: 'Test Destination Address',
       status: { _id: '1', name: 'CREATED', description: 'Created' },

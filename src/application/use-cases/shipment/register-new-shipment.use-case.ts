@@ -40,6 +40,7 @@ export class RegisterNewShipmentUseCase implements IUseCase {
     user: UserDomainEntity,
   ): Observable<ShipmentDomainEntity> {
     const shipment: ShipmentDomainEntity = {
+      description: dto.description,
       user,
       originAddress: dto.originAddress,
       destinationAddress: dto.destinationAddress,

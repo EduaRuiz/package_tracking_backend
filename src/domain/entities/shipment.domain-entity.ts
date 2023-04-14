@@ -4,6 +4,7 @@ import { IShipmentDomainEntity } from './interfaces';
 export class ShipmentDomainEntity implements IShipmentDomainEntity {
   _id?: string;
   user: UserDomainEntity;
+  description: string;
   originAddress: string;
   destinationAddress: string;
   status: StatusDomainEntity;
@@ -12,6 +13,7 @@ export class ShipmentDomainEntity implements IShipmentDomainEntity {
 
   constructor(
     user: UserDomainEntity,
+    description: string,
     originAddress: string,
     destinationAddress: string,
     status: StatusDomainEntity,
@@ -20,6 +22,7 @@ export class ShipmentDomainEntity implements IShipmentDomainEntity {
     _id?: string,
   ) {
     this._id = _id;
+    this.description = description;
     this.user = user;
     this.originAddress = originAddress;
     this.destinationAddress = destinationAddress;

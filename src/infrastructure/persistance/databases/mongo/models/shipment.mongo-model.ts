@@ -25,6 +25,12 @@ export class ShipmentMongoModel implements IShipmentDomainEntity {
   _id?: string;
 
   @Prop({
+    required: true,
+    type: String,
+  })
+  description: string;
+
+  @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserMongoModel',
     required: true,

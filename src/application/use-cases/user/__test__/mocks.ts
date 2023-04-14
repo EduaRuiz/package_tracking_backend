@@ -29,6 +29,7 @@ export const status: IStatusDomainEntity = {
 
 export const shipment: IShipmentDomainEntity = {
   _id: 'shipmentId',
+  description: 'description',
   user,
   originAddress: 'originAddress',
   destinationAddress: 'destinationAddress',
@@ -38,6 +39,7 @@ export const shipment: IShipmentDomainEntity = {
 };
 
 export const registerNewShipmentDto: IRegisterNewShipmentDto = {
+  description: 'description',
   originAddress: 'originAddress',
   destinationAddress: 'destinationAddress',
   userId: 'userId',

@@ -5,12 +5,14 @@ import { RegisterNewShipmentDto } from '..';
 describe('RegisterNewShipmentDto', () => {
   let dto: RegisterNewShipmentDto;
   const validData = {
+    description: 'description',
     userId: '611d8b86ebf1770c40fdd6b4',
     originAddress: '123 Main St',
     destinationAddress: '456 Second St',
   };
 
   const invalidData = {
+    description: '',
     userId: 'invalid-id',
     originAddress: '',
     destinationAddress: '',

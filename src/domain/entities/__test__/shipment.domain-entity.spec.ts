@@ -3,6 +3,7 @@ import { ShipmentDomainEntity } from '..';
 describe('ShipmentDomainEntity', () => {
   // Arrange
   const _id = '123456789';
+  const description = 'description';
   const user = null;
   const originAddress = 'originAddress';
   const destinationAddress = 'destinationAddress';
@@ -14,6 +15,7 @@ describe('ShipmentDomainEntity', () => {
     // Act
     const entity = new ShipmentDomainEntity(
       user,
+      description,
       originAddress,
       destinationAddress,
       status,
@@ -27,6 +29,7 @@ describe('ShipmentDomainEntity', () => {
     // Act
     const entity = new ShipmentDomainEntity(
       user,
+      description,
       originAddress,
       destinationAddress,
       status,
@@ -48,6 +51,7 @@ describe('ShipmentDomainEntity', () => {
     // Act
     const entity = new ShipmentDomainEntity(
       user,
+      description,
       originAddress,
       destinationAddress,
       status,
