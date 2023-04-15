@@ -147,7 +147,7 @@ describe('UserController', () => {
         .mockReturnValue(of(user));
 
       // Act
-      const result$ = controller.getUser({} as any);
+      const result$ = controller.getUser({} as any, {} as any);
 
       // Assert
       expect(spy).toHaveBeenCalled();
@@ -168,7 +168,7 @@ describe('UserController', () => {
         .mockReturnValue(throwError(() => error));
 
       // Act
-      const result$ = controller.getUser({} as any);
+      const result$ = controller.getUser({} as any, {} as any);
 
       // Assert
       expect(spy).toHaveBeenCalled();

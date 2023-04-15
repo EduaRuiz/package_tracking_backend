@@ -57,9 +57,10 @@ export class UserController {
   @Get(':id')
   getUser(
     @Param('id', ValidateMongoId) userId: string,
+    @UserId('id', ValidateMongoId) currentUserId: string,
   ): Observable<UserEntity> {
     this.delegator.toGetUser();
-    return this.delegator.execute(userId);
+    return this.delegator.execute(userId, currentUserId);
   }
 
   @UseGuards(JwtGuard)
