@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDefined,
   IsMongoId,
@@ -25,6 +26,7 @@ export class RegisterNewShipmentDto implements IRegisterNewShipmentDto {
   @IsOptional()
   @IsString()
   @IsMongoId()
+  @ApiProperty()
   userId?: string;
 
   /**
@@ -37,6 +39,7 @@ export class RegisterNewShipmentDto implements IRegisterNewShipmentDto {
   @IsDefined()
   @IsNotEmpty()
   @MinLength(10)
+  @ApiProperty()
   description: string;
 
   /**
@@ -49,6 +52,7 @@ export class RegisterNewShipmentDto implements IRegisterNewShipmentDto {
   @IsDefined()
   @IsNotEmpty()
   @MinLength(10)
+  @ApiProperty()
   originAddress: string;
 
   /**
@@ -61,5 +65,6 @@ export class RegisterNewShipmentDto implements IRegisterNewShipmentDto {
   @IsDefined()
   @IsNotEmpty()
   @MinLength(10)
+  @ApiProperty()
   destinationAddress: string;
 }

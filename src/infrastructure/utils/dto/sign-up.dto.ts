@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDefined,
   IsEmail,
@@ -31,6 +32,7 @@ export class SignUpDto implements ISignUpDto {
   @Matches(new RegExp(/^[A-Za-z0-9]{20,28}$/g), {
     message: 'FirebaseId is not valid',
   })
+  @ApiProperty()
   firebaseId: string;
 
   /**
@@ -41,6 +43,7 @@ export class SignUpDto implements ISignUpDto {
   @IsString()
   @IsDefined()
   @IsEmail()
+  @ApiProperty()
   email: string;
 
   /**
@@ -55,6 +58,7 @@ export class SignUpDto implements ISignUpDto {
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(30)
+  @ApiProperty()
   name: string;
 
   /**
@@ -69,6 +73,7 @@ export class SignUpDto implements ISignUpDto {
   @IsDefined()
   @MinLength(7)
   @MaxLength(10)
+  @ApiProperty()
   document: string;
 
   /**
@@ -83,5 +88,6 @@ export class SignUpDto implements ISignUpDto {
   @IsDefined()
   @MinLength(7)
   @MaxLength(10)
+  @ApiProperty()
   phone: string;
 }

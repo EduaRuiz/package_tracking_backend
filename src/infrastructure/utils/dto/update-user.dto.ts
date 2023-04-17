@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDefined,
   IsMongoId,
@@ -30,6 +31,7 @@ export class UpdateUserDto implements IUpdateUserDto {
   @IsDefined()
   @IsNotEmpty()
   @IsMongoId()
+  @ApiProperty()
   _id?: string;
 
   /**
@@ -45,6 +47,7 @@ export class UpdateUserDto implements IUpdateUserDto {
   @IsNotEmpty()
   @MinLength(7)
   @MaxLength(10)
+  @ApiProperty()
   document?: string;
 
   /**
@@ -60,5 +63,6 @@ export class UpdateUserDto implements IUpdateUserDto {
   @IsNotEmpty()
   @MinLength(7)
   @MaxLength(10)
+  @ApiProperty()
   phone?: string;
 }

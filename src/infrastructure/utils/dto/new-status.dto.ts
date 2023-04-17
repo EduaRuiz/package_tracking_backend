@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { INewStatusDto } from 'src/domain/dto';
 
@@ -18,6 +19,7 @@ export class NewStatusDto implements INewStatusDto {
   @IsString()
   @IsDefined()
   @IsNotEmpty()
+  @ApiProperty()
   name: string;
 
   /**
@@ -30,5 +32,6 @@ export class NewStatusDto implements INewStatusDto {
   @IsDefined()
   @IsNotEmpty()
   @MaxLength(100)
+  @ApiProperty()
   description: string;
 }
