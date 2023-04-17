@@ -8,12 +8,34 @@ import {
 import { IRegisterNewShipmentDto } from 'src/domain/dto';
 import { NotFoundException } from '@nestjs/common';
 
+/**
+ * Register new shipment use case
+ *
+ * @export
+ * @class RegisterNewShipmentUseCase
+ * @typedef {RegisterNewShipmentUseCase}
+ * @implements {IUseCase}
+ */
 export class RegisterNewShipmentUseCase implements IUseCase {
+  /**
+   * Creates an instance of RegisterNewShipmentUseCase.
+   *
+   * @constructor
+   * @param {IShipmentDomainService} shipment$ Shipment domain service
+   * @param {IUserDomainService} user$ User domain service
+   */
   constructor(
     private readonly shipment$: IShipmentDomainService,
     private readonly user$: IUserDomainService,
   ) {}
 
+  /**
+   * Register new shipment if the user id provided as argument to the method execute
+   *
+   * @param {IRegisterNewShipmentDto} dto Register new shipment dto
+   * @param {string} userId User id
+   * @returns {Observable<ShipmentDomainEntity>} Shipment domain entity
+   */
   execute(
     dto: IRegisterNewShipmentDto,
     userId: string,
@@ -25,6 +47,13 @@ export class RegisterNewShipmentUseCase implements IUseCase {
         );
   }
 
+  /**
+   * Validate if the user exists
+   *
+   * @private
+   * @param {string} userId User id
+   * @returns {Observable<UserDomainEntity>} User domain entity
+   */
   private validateUserExists(userId: string): Observable<UserDomainEntity> {
     return this.user$.getUserById(userId).pipe(
       switchMap((user: UserDomainEntity) => {
@@ -35,6 +64,14 @@ export class RegisterNewShipmentUseCase implements IUseCase {
     );
   }
 
+  /**
+   * Create shipment domain entity and save it
+   *
+   * @private
+   * @param {IRegisterNewShipmentDto} dto Register new shipment dto
+   * @param {UserDomainEntity} user User domain entity
+   * @returns {Observable<ShipmentDomainEntity>} Shipment domain entity created
+   */
   private createShipment(
     dto: IRegisterNewShipmentDto,
     user: UserDomainEntity,

@@ -10,7 +10,21 @@ import {
 } from 'class-validator';
 import { IUpdateUserDto } from 'src/domain/dto';
 
+/**
+ * Update User Dto class
+ *
+ * @export
+ * @class UpdateUserDto
+ * @typedef {UpdateUserDto}
+ * @implements {IUpdateUserDto}
+ */
 export class UpdateUserDto implements IUpdateUserDto {
+  /**
+   * Id, it is optional and it has to be a string and it has to be defined and it has to be not empty
+   * and it has to be a valid mongo id
+   *
+   * @type {?string}
+   */
   @IsOptional()
   @IsString()
   @IsDefined()
@@ -18,6 +32,13 @@ export class UpdateUserDto implements IUpdateUserDto {
   @IsMongoId()
   _id?: string;
 
+  /**
+   * Document, it is optional and it has to be a string and number, it has to be defined and it
+   * has to be not empty and it has to have a minimum length of 7 characters and it has to have a
+   *  maximum length of 10 characters
+   *
+   * @type {?string}
+   */
   @IsOptional()
   @IsNumberString()
   @IsDefined()
@@ -26,6 +47,13 @@ export class UpdateUserDto implements IUpdateUserDto {
   @MaxLength(10)
   document?: string;
 
+  /**
+   * Phone, it is optional and it has to be a string and number, it has to be defined and it has to be
+   * not empty and it has to have a minimum length of 7 characters and it has to have a
+   * maximum length of 10 characters
+   *
+   * @type {?string}
+   */
   @IsOptional()
   @IsNumberString()
   @IsDefined()

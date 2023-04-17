@@ -14,12 +14,32 @@ import { Model } from 'mongoose';
 import { UserMongoModel } from '../models';
 import { MongoServerError } from 'mongodb';
 
+/**
+ * User Mongo Repository class
+ *
+ * @export
+ * @class UserMongoRepository
+ * @typedef {UserMongoRepository}
+ * @implements {IRepositoryBase<UserMongoModel>}
+ */
 export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
+  /**
+   * Creates an instance of UserMongoRepository.
+   *
+   * @constructor
+   * @param {Model<UserMongoModel>} stockMongoModel The user Mongo model
+   */
   constructor(
     @InjectModel(UserMongoModel.name)
     private stockMongoModel: Model<UserMongoModel>,
   ) {}
 
+  /**
+   * Creates a new user
+   *
+   * @param {UserMongoModel} entity The user to be created
+   * @returns {Observable<UserMongoModel>} The user created
+   */
   create(entity: UserMongoModel): Observable<UserMongoModel> {
     return from(this.stockMongoModel.create(entity)).pipe(
       catchError((error: MongoServerError) => {
@@ -29,6 +49,13 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
     );
   }
 
+  /**
+   * Updates a user
+   *
+   * @param {string} entityId The user id to update
+   * @param {UserMongoModel} entity The user to update
+   * @returns {Observable<UserMongoModel>} The user updated
+   */
   update(entityId: string, entity: UserMongoModel): Observable<UserMongoModel> {
     return this.findOneById(entityId).pipe(
       switchMap((user: UserMongoModel) => {
@@ -48,6 +75,12 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
     );
   }
 
+  /**
+   * Deletes a user
+   *
+   * @param {string} entityId The user id to delete
+   * @returns {Observable<UserMongoModel>} The user deleted
+   */
   delete(entityId: string): Observable<UserMongoModel> {
     return this.findOneById(entityId).pipe(
       switchMap(() => {
@@ -65,6 +98,11 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
     );
   }
 
+  /**
+   * Gets all users
+   *
+   * @returns {Observable<UserMongoModel[]>} The user list
+   */
   findAll(): Observable<UserMongoModel[]> {
     return from(this.stockMongoModel.find().exec()).pipe(
       catchError((error: MongoServerError) => {
@@ -74,6 +112,12 @@ export class UserMongoRepository implements IRepositoryBase<UserMongoModel> {
     );
   }
 
+  /**
+   * Gets a user by id
+   *
+   * @param {string} entityId The user id to get
+   * @returns {Observable<UserMongoModel>} The user found
+   */
   findOneById(entityId: string): Observable<UserMongoModel> {
     return from(
       this.stockMongoModel.findById({ _id: entityId.toString() }),

@@ -6,12 +6,33 @@ import { UserDomainEntity } from 'src/domain/entities';
 import { IUserResponse } from 'src/domain/interfaces';
 import { ConflictException } from '@nestjs/common';
 
+/**
+ * Sign up use case class definition for sign up user
+ *
+ * @export
+ * @class SignUpUseCase
+ * @typedef {SignUpUseCase}
+ * @implements {IUseCase}
+ */
 export class SignUpUseCase implements IUseCase {
+  /**
+   * Creates an instance of SignUpUseCase.
+   *
+   * @constructor
+   * @param {IUserDomainService} user$ User domain service
+   * @param {IAuthDomainService} auth$ Auth domain service
+   */
   constructor(
     private readonly user$: IUserDomainService,
     private readonly auth$: IAuthDomainService,
   ) {}
 
+  /**
+   * Sign up user by dto
+   *
+   * @param {ISignUpDto} dto Sign up dto
+   * @returns {Observable<IUserResponse>} User response observable
+   */
   execute(dto: ISignUpDto): Observable<IUserResponse> {
     return this.validateUserDataExist(dto).pipe(
       switchMap(() =>
@@ -26,6 +47,13 @@ export class SignUpUseCase implements IUseCase {
     );
   }
 
+  /**
+   * Validate user data exist
+   *
+   * @private
+   * @param {ISignUpDto} dto Sign up dto
+   * @returns {Observable<boolean>} Boolean observable
+   */
   private validateUserDataExist(dto: ISignUpDto): Observable<boolean> {
     return this.user$.getAllUsers().pipe(
       switchMap((users: UserDomainEntity[]) => {

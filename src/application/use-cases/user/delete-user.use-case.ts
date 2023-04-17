@@ -7,12 +7,34 @@ import { UserDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap, throwError } from 'rxjs';
 import { ConflictException } from '@nestjs/common';
 
+/**
+ * Delete user use case (business rule: cannot delete other user)
+ *
+ * @export
+ * @class DeleteUserUseCase
+ * @typedef {DeleteUserUseCase}
+ * @implements {IUseCase}
+ */
 export class DeleteUserUseCase implements IUseCase {
+  /**
+   * Creates an instance of DeleteUserUseCase.
+   *
+   * @constructor
+   * @param {IUserDomainService} user$ User domain service
+   * @param {IShipmentDomainService} shipment$ Shipment domain service
+   */
   constructor(
     private readonly user$: IUserDomainService,
     private readonly shipment$: IShipmentDomainService,
   ) {}
 
+  /**
+   * Delete user by id if it is not in use by any shipment
+   *
+   * @param {string} userId User id
+   * @param {string} currentUserId Current user id
+   * @returns {Observable<UserDomainEntity>} User domain entity deleted
+   */
   execute(userId: string, currentUserId: string): Observable<UserDomainEntity> {
     return userId !== currentUserId
       ? throwError(new ConflictException('Cannot delete other user'))

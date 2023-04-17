@@ -3,8 +3,28 @@ import mongoose, { HydratedDocument } from 'mongoose';
 import { IShipmentDomainEntity } from 'src/domain/entities/interfaces';
 import { StatusMongoModel, UserMongoModel } from '.';
 
+/**
+ * Shipment Mongo Model class
+ *
+ * @export
+ * @class ShipmentMongoModel
+ * @typedef {ShipmentMongoModel}
+ * @implements {IShipmentDomainEntity}
+ */
 @Schema({ collection: 'shipment', versionKey: false })
 export class ShipmentMongoModel implements IShipmentDomainEntity {
+  /**
+   * Creates an instance of ShipmentMongoModel.
+   *
+   * @constructor
+   * @param {UserMongoModel} user User
+   * @param {string} originAddress Origin address
+   * @param {string} destinationAddress Destination address
+   * @param {StatusMongoModel} status Status
+   * @param {Date} createdAt Created at
+   * @param {Date} updatedAt Updated at
+   * @param {?string} [_id] Id of the shipment
+   */
   constructor(
     user: UserMongoModel,
     originAddress: string,
@@ -22,14 +42,29 @@ export class ShipmentMongoModel implements IShipmentDomainEntity {
     this.updatedAt = updatedAt;
     this._id = _id;
   }
+  /**
+   * Id of the shipment
+   *
+   * @type {?string}
+   */
   _id?: string;
 
+  /**
+   * Description of the shipment
+   *
+   * @type {string}
+   */
   @Prop({
     required: true,
     type: String,
   })
   description: string;
 
+  /**
+   * User of the shipment
+   *
+   * @type {UserMongoModel}
+   */
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserMongoModel',
@@ -37,18 +72,33 @@ export class ShipmentMongoModel implements IShipmentDomainEntity {
   })
   user: UserMongoModel;
 
+  /**
+   * Origin address of the shipment
+   *
+   * @type {string}
+   */
   @Prop({
     required: true,
     type: String,
   })
   originAddress: string;
 
+  /**
+   * Destination address of the shipment
+   *
+   * @type {string}
+   */
   @Prop({
     required: true,
     type: String,
   })
   destinationAddress: string;
 
+  /**
+   * Status of the shipment
+   *
+   * @type {StatusMongoModel}
+   */
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'StatusMongoModel',
@@ -56,12 +106,22 @@ export class ShipmentMongoModel implements IShipmentDomainEntity {
   })
   status: StatusMongoModel;
 
+  /**
+   * Date of created at of the shipment
+   *
+   * @type {Date}
+   */
   @Prop({
     required: true,
     type: Date,
   })
   createdAt: Date;
 
+  /**
+   * Date of updated at of the shipment
+   *
+   * @type {Date}
+   */
   @Prop({
     required: true,
     type: Date,
@@ -69,5 +129,16 @@ export class ShipmentMongoModel implements IShipmentDomainEntity {
   updatedAt: Date;
 }
 
+/**
+ * Shipment schema
+ *
+ * @type {*}
+ */
 export const ShipmentSchema = SchemaFactory.createForClass(ShipmentMongoModel);
+/**
+ * Shipment document
+ *
+ * @export
+ * @typedef {ShipmentDocument}
+ */
 export type ShipmentDocument = HydratedDocument<ShipmentMongoModel>;

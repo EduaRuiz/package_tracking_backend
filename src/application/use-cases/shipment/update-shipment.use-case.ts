@@ -7,12 +7,34 @@ import { ShipmentDomainEntity } from 'src/domain/entities';
 import { Observable, switchMap } from 'rxjs';
 import { IUpdateShipmentDto } from 'src/domain/dto';
 
+/**
+ * Update shipment use case
+ *
+ * @export
+ * @class UpdateShipmentUseCase
+ * @typedef {UpdateShipmentUseCase}
+ * @implements {IUseCase}
+ */
 export class UpdateShipmentUseCase implements IUseCase {
+  /**
+   * Creates an instance of UpdateShipmentUseCase.
+   *
+   * @constructor
+   * @param {IShipmentDomainService} shipment$ Shipment domain service
+   * @param {IStatusDomainService} status$ Status domain service
+   */
   constructor(
     private readonly shipment$: IShipmentDomainService,
     private readonly status$: IStatusDomainService,
   ) {}
 
+  /**
+   * Update shipment by id and dto
+   *
+   * @param {string} shipmentId Shipment id
+   * @param {IUpdateShipmentDto} dto Update shipment dto
+   * @returns {Observable<ShipmentDomainEntity>}
+   */
   execute(
     shipmentId: string,
     dto: IUpdateShipmentDto,

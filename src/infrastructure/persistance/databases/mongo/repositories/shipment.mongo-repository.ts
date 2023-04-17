@@ -14,14 +14,34 @@ import { Model } from 'mongoose';
 import { ShipmentMongoModel } from '../models';
 import { MongoServerError } from 'mongodb';
 
+/**
+ * Shipment Mongo Repository class
+ *
+ * @export
+ * @class ShipmentMongoRepository
+ * @typedef {ShipmentMongoRepository}
+ * @implements {IRepositoryBase<ShipmentMongoModel>}
+ */
 export class ShipmentMongoRepository
   implements IRepositoryBase<ShipmentMongoModel>
 {
+  /**
+   * Creates an instance of ShipmentMongoRepository.
+   *
+   * @constructor
+   * @param {Model<ShipmentMongoModel>} stockMongoModel The shipment Mongo model
+   */
   constructor(
     @InjectModel(ShipmentMongoModel.name)
     private stockMongoModel: Model<ShipmentMongoModel>,
   ) {}
 
+  /**
+   * Creates a shipment
+   *
+   * @param {ShipmentMongoModel} entity The shipment to create
+   * @returns {Observable<ShipmentMongoModel>} The shipment created
+   */
   create(entity: ShipmentMongoModel): Observable<ShipmentMongoModel> {
     return from(this.stockMongoModel.create(entity)).pipe(
       catchError((error: MongoServerError) => {
@@ -31,6 +51,13 @@ export class ShipmentMongoRepository
     );
   }
 
+  /**
+   * Updates a shipment
+   *
+   * @param {string} entityId The shipment id to update
+   * @param {ShipmentMongoModel} entity The shipment to update
+   * @returns {Observable<ShipmentMongoModel>} The shipment updated
+   */
   update(
     entityId: string,
     entity: ShipmentMongoModel,
@@ -53,6 +80,12 @@ export class ShipmentMongoRepository
     );
   }
 
+  /**
+   * Deletes a shipment
+   *
+   * @param {string} entityId The shipment id to delete
+   * @returns {Observable<ShipmentMongoModel>} The shipment deleted
+   */
   delete(entityId: string): Observable<ShipmentMongoModel> {
     return this.findOneById(entityId).pipe(
       switchMap(() => {
@@ -70,6 +103,11 @@ export class ShipmentMongoRepository
     );
   }
 
+  /**
+   * Gets all shipments
+   *
+   * @returns {Observable<ShipmentMongoModel[]>} The shipments list
+   */
   findAll(): Observable<ShipmentMongoModel[]> {
     return from(
       this.stockMongoModel
@@ -83,6 +121,12 @@ export class ShipmentMongoRepository
     );
   }
 
+  /**
+   * Gets a shipment by id
+   *
+   * @param {string} entityId The shipment id to get
+   * @returns {Observable<ShipmentMongoModel>} The shipment found
+   */
   findOneById(entityId: string): Observable<ShipmentMongoModel> {
     return from(
       this.stockMongoModel.findById(

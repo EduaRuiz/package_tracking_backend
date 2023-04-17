@@ -17,7 +17,8 @@
     "test:watch": "set SCOPE=test & jest --watch",
     "test:cov": "set SCOPE=test & jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "set SCOPE=test & jest --config ./test/jest-e2e.json"
+    "test:e2e": "set SCOPE=test & jest --config ./test/jest-e2e.json",
+    "cov": "npx @compodoc/compodoc -p tsconfig.compodoc.json -s"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -26,6 +27,7 @@
     "@nestjs/jwt": "^10.0.3",
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.3.0",
     "@types/uuid": "^9.0.1",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
@@ -35,6 +37,7 @@
     "pg": "^8.10.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
+    "swagger-ui-express": "^4.6.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

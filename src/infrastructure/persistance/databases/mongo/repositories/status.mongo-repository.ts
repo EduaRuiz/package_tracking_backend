@@ -14,14 +14,34 @@ import { Model } from 'mongoose';
 import { StatusMongoModel } from '../models';
 import { MongoServerError } from 'mongodb';
 
+/**
+ * Status Mongo Repository class
+ *
+ * @export
+ * @class StatusMongoRepository
+ * @typedef {StatusMongoRepository}
+ * @implements {IRepositoryBase<StatusMongoModel>}
+ */
 export class StatusMongoRepository
   implements IRepositoryBase<StatusMongoModel>
 {
+  /**
+   * Creates an instance of StatusMongoRepository.
+   *
+   * @constructor
+   * @param {Model<StatusMongoModel>} stockMongoModel The status Mongo model
+   */
   constructor(
     @InjectModel(StatusMongoModel.name)
     private stockMongoModel: Model<StatusMongoModel>,
   ) {}
 
+  /**
+   * Creates a status
+   *
+   * @param {StatusMongoModel} entity The status to create
+   * @returns {Observable<StatusMongoModel>} The status created
+   */
   create(entity: StatusMongoModel): Observable<StatusMongoModel> {
     return from(this.stockMongoModel.create(entity)).pipe(
       catchError((error: MongoServerError) => {
@@ -31,6 +51,13 @@ export class StatusMongoRepository
     );
   }
 
+  /**
+   * Updates a status
+   *
+   * @param {string} entityId The status id to update
+   * @param {StatusMongoModel} entity The status to update
+   * @returns {Observable<StatusMongoModel>} The status updated
+   */
   update(
     entityId: string,
     entity: StatusMongoModel,
@@ -53,6 +80,12 @@ export class StatusMongoRepository
     );
   }
 
+  /**
+   * Deletes a status
+   *
+   * @param {string} entityId The status id to delete
+   * @returns {Observable<StatusMongoModel>} The status deleted
+   */
   delete(entityId: string): Observable<StatusMongoModel> {
     return this.findOneById(entityId).pipe(
       switchMap(() => {
@@ -70,6 +103,11 @@ export class StatusMongoRepository
     );
   }
 
+  /**
+   * Gets all status
+   *
+   * @returns {Observable<StatusMongoModel[]>} All status list
+   */
   findAll(): Observable<StatusMongoModel[]> {
     return from(this.stockMongoModel.find().exec()).pipe(
       catchError((error: MongoServerError) => {
@@ -79,6 +117,12 @@ export class StatusMongoRepository
     );
   }
 
+  /**
+   * Gets a status by id
+   *
+   * @param {string} entityId The status id to get
+   * @returns {Observable<StatusMongoModel>} The status found
+   */
   findOneById(entityId: string): Observable<StatusMongoModel> {
     return from(
       this.stockMongoModel.findById({ _id: entityId.toString() }),
